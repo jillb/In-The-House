@@ -8,3 +8,38 @@ Template:       mystique-1
 */
 
 @import url("../mystique-1/style.css");
+
+body {
+	font-size: 62.5%;
+}
+
+/*body.fixed .page-content {
+	width: 1000px;
+}*/
+
+#page {
+	font-size: 1.3em;
+}
+
+.block-Widget_Include_Post .addthis_toolbox {
+	display: none;
+}
+
+.addthis_toolbox {
+	float: right;
+	width: 11em;
+}
+
+
+
+/***** Modify Plugins *****/
+
+/** Category Grid View Gallery **/
+
+#primary-content div.cgview ul li {
+    border: 3px solid black;
+}
+
+#primary-content div.cgview ul li:hover {
+    border-color: #AAA;
+}
