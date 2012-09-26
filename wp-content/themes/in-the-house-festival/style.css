@@ -30,7 +30,23 @@ body {
 	width: 11em;
 }
 
+/***** Homepage *****/
 
+/*.home h1.title {
+	display: none;
+}*/
+
+/**** Footer *****/
+
+.nav-footer ul.menu {
+	float: left;
+	margin-right: 2em;
+}
+
+#footer .count-2 .block {	/* footer social media buttons */
+    width: auto;
+    margin-right: 2em;
+}
 
 /***** Modify Plugins *****/
 
