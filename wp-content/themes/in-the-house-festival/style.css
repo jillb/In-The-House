@@ -19,10 +19,11 @@ body {
 
 #page {
 	font-size: 1.3em;
+	background: none;
 }
 
-.block-Widget_Include_Post .addthis_toolbox {
-	display: none;
+.fluid.c2right #primary-content {
+    left: 31% !important;	/* giving some padding left of content */
 }
 
 .addthis_toolbox {
@@ -35,6 +36,36 @@ body {
 /*.home h1.title {
 	display: none;
 }*/
+
+#createown_btn,
+#contact_home_btn {
+	border: 2px solid black;
+	background: #EEE;
+	width: 13em;
+	margin: 2em auto;
+	padding: 1em;
+	text-align: center;
+}
+
+/**** Sidebar ****/
+
+.block-Widget_Include_Post .addthis_toolbox { /* remove addthis from sidebars */
+	display: none;
+}
+
+#instance-include_post-6,
+#instance-include_post-7,
+#instance-include_post-5 {
+	border: 2px solid black;
+	background: #DDD;
+	padding: 1em;
+}
+
+#instance-include_post-7,
+#instance-include_post-5 {
+	font-size: 1.6em;
+}
+
 
 /**** Footer *****/
 
