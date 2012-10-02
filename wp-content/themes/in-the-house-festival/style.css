@@ -37,6 +37,25 @@ body {
 	display: none;
 }*/
 
+#primary-content div.cgview ul li.goodfor {
+	border: 0;
+	text-align: left;
+	font-weight: normal;
+	overflow: visible;
+	width: 9em;
+    vertical-align: top;
+}
+
+#primary-content div.cgview ul li.goodfor .goodforlist li {
+	border: 0;
+	display: block;
+	text-align: left;
+	line-height: 1em;
+	font-weight: normal;
+	overflow: visible;
+}
+
+
 #createown_btn,
 #contact_home_btn {
 	border: 2px solid black;
@@ -45,12 +64,19 @@ body {
 	margin: 2em auto;
 	padding: 1em;
 	text-align: center;
+	display: block;
+	text-decoration: none;
+	color: #000;
 }
 
 /**** Sidebar ****/
 
 .block-Widget_Include_Post .addthis_toolbox { /* remove addthis from sidebars */
 	display: none;
+}
+
+#instance-include_post-6 input {	/* temporary until real newsletter goes in */
+	width: 17em;
 }
 
 #instance-include_post-6,
