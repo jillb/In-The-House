@@ -102,4 +102,35 @@ function cooking_videos_init()
 	register_post_type('videos',$args);
 }
 
+
+// Add custom taxonomies
+add_action( 'init', 'cooking_create_taxonomies', 0 );
+
+function cooking_create_taxonomies() 
+{
+	// Meal type
+
+		$meal_labels = array(
+		'name' => _x( 'Meal type', 'taxonomy general name' ),
+		'singular_name' => _x( 'Meal type', 'taxonomy singular name' ),
+		'search_items' =>  __( 'Search in meal type' ),
+		'all_items' => __( 'All meal type' ),
+		'most_used_items' => null,
+		'parent_item' => null,
+		'parent_item_colon' => null,
+		'edit_item' => __( 'Edit meal type' ), 
+		'update_item' => __( 'Update meal type' ),
+		'add_new_item' => __( 'Add new meal type' ),
+		'new_item_name' => __( 'New meal type' ),
+		'menu_name' => __( 'Meal type' ),
+	);
+	register_taxonomy('meal-type',array('recipes','photos','videos','post'),array(
+		'hierarchical' => true,
+		'labels' => $meal_labels,
+		'show_ui' => true,
+		'query_var' => true,
+		'rewrite' => array('slug' => 'meal-type' )
+	));
+}
+
 ?>
