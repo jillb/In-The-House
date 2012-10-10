@@ -28,7 +28,7 @@ function inthehouse_productions_init()
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => 5,
-		'supports' => array('title','editor','author','thumbnail','excerpt','comments','custom-fields'),
+		'supports' => array('title','thumbnail'),
 		'has_archive' => 'productions'
 	); 
 	register_post_type('productions',$args);
@@ -62,7 +62,7 @@ function inthehouse_events_init()
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => 5,
-		'supports' => array('title','editor','author','thumbnail','excerpt','comments','custom-fields'),
+		'supports' => array('title','thumbnail'),
 		'has_archive' => 'events'
 	); 
 	register_post_type('events',$args);
@@ -96,7 +96,7 @@ function inthehouse_performers_init()
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => 5,
-		'supports' => array('title','editor','author','thumbnail','excerpt','comments','custom-fields'),
+		'supports' => array('title','thumbnail'),
 		'has_archive' => 'performers'
 	); 
 	register_post_type('performers',$args);
@@ -110,7 +110,7 @@ function inthehouse_create_taxonomies()
 {
 	// Show type
 
-		$show_labels = array(
+	$show_labels = array(
 		'name' => _x( 'Show type', 'taxonomy general name' ),
 		'singular_name' => _x( 'Show type', 'taxonomy singular name' ),
 		'search_items' =>  __( 'Search in show type' ),
@@ -124,13 +124,70 @@ function inthehouse_create_taxonomies()
 		'new_item_name' => __( 'New show type' ),
 		'menu_name' => __( 'Show type' ),
 	);
-	register_taxonomy('show-type',array('productions','events'),array(
+
+	register_taxonomy('show-type',array('productions'),array(
 		'hierarchical' => true,
 		'labels' => $show_labels,
 		'show_ui' => true,
 		'query_var' => true,
 		'rewrite' => array('slug' => 'show-type' )
 	));
+
+
+	// Performer type
+
+	$performer_labels = array(
+		'name' => _x( 'Performer type', 'taxonomy general name' ),
+		'singular_name' => _x( 'Performer type', 'taxonomy singular name' ),
+		'search_items' =>  __( 'Search in performer type' ),
+		'all_items' => __( 'All performer type' ),
+		'most_used_items' => null,
+		'parent_item' => null,
+		'parent_item_colon' => null,
+		'edit_item' => __( 'Edit performer type' ), 
+		'update_item' => __( 'Update performer type' ),
+		'add_new_item' => __( 'Add new performer type' ),
+		'new_item_name' => __( 'New performer type' ),
+		'menu_name' => __( 'Performer type' ),
+	);
+
+	register_taxonomy('performer-type',array('performers'),array(
+		'hierarchical' => true,
+		'labels' => $performer_labels,
+		'show_ui' => true,
+		'query_var' => true,
+		'rewrite' => array('slug' => 'performer-type' )
+	));
+
+
+	// Audience Size
+/*	$audiencesize_labels = array(
+		'name' => _x( 'Audience Size', 'taxonomy general name' ),
+		'singular_name' => _x( 'Audience Size', 'taxonomy singular name' ),
+		'search_items' =>  __( 'Search in audience sizes' ),
+		'popular_items' => __( 'Popular audience sizes' ),
+		'all_items' => __( 'All audience sizes' ),
+		'most_used_items' => null,
+		'parent_item' => null,
+		'parent_item_colon' => null,
+		'edit_item' => __( 'Edit audience size' ), 
+		'update_item' => __( 'Update audience size' ),
+		'add_new_item' => __( 'Add new audience size' ),
+		'new_item_name' => __( 'New audience size name' ),
+		'separate_items_with_commas' => __( 'Range of people it can accommodate, i.e. 50-100' ),
+		'add_or_remove_items' => __( 'Add or remove audience size' ),
+		'choose_from_most_used' => __( 'Choose from the most used audience size' )
+	);
+
+
+	register_taxonomy('audiencesizes',array('productions'),array(
+		'hierarchical' => false,
+		'labels' => $audiencesize_labels,
+		'show_ui' => true,
+		'update_count_callback' => '_update_post_term_count',
+		'query_var' => true,
+		'rewrite' => array('slug' => 'audiencesize' )
+	));	*/
 }
 
 // Add new Custom Post Type icons
