@@ -27,13 +27,19 @@ body {
 }
 
 .fluid.c2right #primary-content {
-    left: 31% !important;	/* giving some padding left of content */
+    left: 27% !important;	/* giving some padding left of content */
 }
 
 .addthis_toolbox {
 	float: right;
 	width: 11em;
 }
+
+#header ul.media.nudge li {
+	position: relative;
+	top: -10px;
+}
+
 
 /***** Homepage *****/
 
@@ -79,9 +85,22 @@ body {
 	display: none;
 }
 
-#instance-include_post-6 input {	/* temporary until real newsletter goes in */
-	width: 17em;
+/*** Newsletter ***/
+
+#instance-include_post-6 a {
+	display: none;
 }
+
+#page .fsBody .fsForm {
+	background-color: transparent;
+	border: none;
+}
+
+#page .fsForm .fsSubmit {
+	background-color: transparent;
+}
+
+/**********/
 
 #instance-include_post-6,
 #instance-include_post-7,
