@@ -1,13 +1,13 @@
 /*
-Theme Name:     In The House Festival
-Description:    A child of Mystique, designed exclusively for In The House Festival
+Theme Name:     In The House Festival 2
+Description:    New theme for In The House based on BootstrapWP
 Author:         Jill Binder
-Template:       mystique-1
+Template:       rachelbaker-bootstrapwp-Twitter-Bootstrap-for-WordPress-54cea2b
 
 (optional values you can add: Theme URI, Author URI, Version)
 */
 
-@import url("../mystique-1/style.css");
+@import url("../rachelbaker-bootstrapwp-Twitter-Bootstrap-for-WordPress-54cea2b/style.css");
 
 body {
 	font-size: 62.5%;
@@ -23,11 +23,6 @@ body {
 
 #page {
 	font-size: 1.3em;
-	background: none;
-}
-
-.fluid.c2right #primary-content {
-    left: 27% !important;	/* giving some padding left of content */
 }
 
 .addthis_toolbox {
@@ -35,11 +30,11 @@ body {
 	width: 11em;
 }
 
-#header ul.media.nudge li {
+/*#header ul.media.nudge li {
 	position: relative;
 	top: -10px;
 }
-
+*/
 
 /***** Homepage *****/
 
@@ -47,7 +42,7 @@ body {
 	display: none;
 }*/
 
-#primary-content div.cgview ul li.goodfor {
+div.cgview ul li.goodfor {
 	border: 0;
 	text-align: left;
 	font-weight: normal;
@@ -56,7 +51,7 @@ body {
     vertical-align: top;
 }
 
-#primary-content div.cgview ul li.goodfor .goodforlist li {
+div.cgview ul li.goodfor .goodforlist li {
 	border: 0;
 	display: block;
 	text-align: left;
@@ -67,8 +62,7 @@ body {
 
 
 #createown_btn,
-#contact_home_btn,
-#codecision_btn {
+#contact_home_btn {
 	border: 2px solid black;
 	background: #EEE;
 	width: 13em;
@@ -130,15 +124,15 @@ body {
 
 /**** Footer *****/
 
-.nav-footer ul.menu {
+/*.nav-footer ul.menu {
 	float: left;
 	margin-right: 2em;
-}
+}*/
 
-#footer .count-2 .block {	/* footer social media buttons */
-    width: auto;
+/*#footer .count-2 .block {*/	/* footer social media buttons */
+/*    width: auto;
     margin-right: 2em;
-}
+}*/
 
 /***** Modify Plugins *****/
 

@@ -26,7 +26,7 @@ function inthehouse_productions_init()
 		'query_var' => true,
 		'rewrite' => true,
 		'capability_type' => 'post',
-		'hierarchical' => false,
+		'hierarchical' => true,
 		'menu_position' => 5,
 		'supports' => array('title','thumbnail'),
 		'has_archive' => 'productions'
@@ -94,7 +94,7 @@ function inthehouse_performers_init()
 		'query_var' => true,
 		'rewrite' => true,
 		'capability_type' => 'post',
-		'hierarchical' => false,
+		'hierarchical' => true,
 		'menu_position' => 5,
 		'supports' => array('title','thumbnail'),
 		'has_archive' => 'performers'
