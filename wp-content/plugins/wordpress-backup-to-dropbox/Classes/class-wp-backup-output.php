@@ -25,50 +25,33 @@ class WP_Backup_Output {
 	private $dropbox;
 	private $config;
 	private $last_backup_time;
-	private $dropbox_location;
-	private $max_file_size;
 	private $error_count;
 
 	public function __construct($dropbox = false, $config = false) {
 		$this->dropbox = $dropbox ? $dropbox : Dropbox_Facade::construct();
 		$this->config = $config ? $config : WP_Backup_Config::construct();
-
-		$this->last_backup_time = $this->config->get_option('last_backup_time');
-
-		$this->dropbox_location = null;
-		if ($this->config->get_option('store_in_subfolder'))
-			$this->dropbox_location = $this->config->get_option('dropbox_location');
-
-		$this->max_file_size = $this->config->get_max_file_size();
+		$this->last_backup_time = array_pop($this->config->get_history());
 	}
 
-	public function out($source, $file) {
+	public function out($source, $file, $root = false) {
 
 		if ($this->error_count > self::MAX_ERRORS) {
 			throw new Exception(sprintf(__('The backup is having trouble uploading files to Dropbox, it has failed %s times and is aborting the backup.'), self::MAX_ERRORS));
 		}
 
-		if (filesize($file) > $this->max_file_size) {
-			$this->config->log(WP_Backup_Config::BACKUP_STATUS_WARNING,
-						sprintf(__("file '%s' exceeds 40 percent of your PHP memory limit. The limit must be increased to back up this file.", 'wpbtd'), basename($file)));
-			return;
-		}
-
-		$dropbox_path = $this->dropbox_location . DIRECTORY_SEPARATOR . str_replace($source . DIRECTORY_SEPARATOR, '', $file);
-		if (PHP_OS == 'WINNT') {
-			//The dropbox api requires a forward slash as the directory separator
-			$dropbox_path = str_replace(DIRECTORY_SEPARATOR, '/', $dropbox_path);
-		}
+		$dropbox_path = $this->config->get_dropbox_path($source, $file, $root);
 
 		try {
-
-			$directory_contents = $this->dropbox->get_directory_contents(dirname($dropbox_path));
-			if (!in_array(basename($file), $directory_contents) || filemtime($file) > $this->last_backup_time)
-				$this->dropbox->upload_file($dropbox_path, $file);
+			$directory_contents = $this->dropbox->get_directory_contents($dropbox_path);
+			if (!in_array(basename($file), $directory_contents) || filemtime($file) > $this->last_backup_time) {
+				if (filesize($file) > CHUNKED_UPLOAD_THREASHOLD)
+					return $this->dropbox->chunk_upload_file($dropbox_path, $file);
+				else
+					return $this->dropbox->upload_file($dropbox_path, $file);
+			}
 
 		} catch (Exception $e) {
-			$msg = sprintf(__("There was an error uploading '%s' to Dropbox", 'wpbtd'), $file);
-			$this->config->log(WP_Backup_Config::BACKUP_STATUS_WARNING, $msg);
+			WP_Backup_Logger::log(sprintf(__("Error uploading '%s' to Dropbox: %s", 'wpbtd'), $file, strip_tags($e->getMessage())));
 			$this->error_count++;
 		}
 	}

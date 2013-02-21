@@ -1,0 +1,30 @@
+a									{ text-decoration: none; }
+ul									{ list-style: none !important; margin: 0 !important;}
+
+
+/* 
+	LEVEL ONE
+*/
+
+
+ul.jqueryeasymenu                         { position: relative; list-style: none !important; margin: 0 !important; padding: 0 !important;}
+ul.jqueryeasymenu li                      { font-weight: bold; float: left; zoom: 1; background: #ccc; }
+ul.jqueryeasymenu li a                    { display: block; }
+ul.jqueryeasymenu li:last-child a         { border-right: none; } /* Doesn't work in IE */
+
+
+
+/* 
+	LEVEL TWO
+*/
+ul.jqueryeasymenu ul 						{ width: 220px; visibility: hidden; position: absolute; top: 100%; left: 0; }
+ul.jqueryeasymenu ul li 					{ font-weight: normal; background: #f6f6f6; border-bottom: 1px solid #ccc; float: none; }
+									  
+                                    /* IE 6 & 7 Needs Inline Block */
+ul.jqueryeasymenu ul li a					{ border-right: none; width: 100%; display: inline-block; } 
+
+/* 
+	LEVEL THREE
+*/
+ul.jqueryeasymenu ul ul 					{ left: 100%; top: 0; }
+ul.jqueryeasymenu li:hover > ul 			{ visibility: visible; }

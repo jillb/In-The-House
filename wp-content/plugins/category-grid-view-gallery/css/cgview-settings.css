@@ -19,7 +19,7 @@
 #cgview-settings-left tr tr{vertical-align:middle;border:0;}
 
 #cgview-settings-left th p{line-height:150%;font-weight:normal;padding:0;margin:0;}
-#cgview-settings-left th p span{color:#999;font-weight:normal;font-style:italic;display:block}
+#cgview-settings-left th p span, #cgview-settings-left td span{color:#999;font-weight:normal;font-style:italic;display:block}
 
 #cgview-settings-left label{margin-right:20px;}
 

@@ -9,10 +9,12 @@ function cgview_default_settings(){
 	$defaults = array(
     'default_image' => CGVIEW_URL.'/includes/default.jpg',
 	'custom_image' => CGVIEW_URL.'/includes/default.jpg',
-    'credits' => 0,
+    'credits' => 1,
     'color_scheme' => 'light',
     'image_source' => 'first',
-	'lightbox_width' => '700');
+	'lightbox_width' => '700',
+	'lightbox_height' => '400',
+	'load_comments' => 0);
   return $defaults;
 }
 

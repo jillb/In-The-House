@@ -52,22 +52,9 @@ Author : Anshul Sharma (contact@anshulsharma.in)
 		
 		if(((int)$size[0]>=100||(int)$size[1]>=100))
 		$cgitem.= $this->cg_get_title($single);
-
-		$cgitem .= '</li>';
-
-$categories = get_the_category($single->ID);
-
-if($categories){
-	$cgitem .= '<li class="goodfor">Good for:';
-	$cgitem .= '<ul class="goodforlist">';
-	foreach($categories as $category) {
-		$cgitem .= '<li>- ' . $category->cat_name . "</li>";
-	}
-
-	$cgitem .= '</ul></li>';
-}
-
-
+		
+		$cgitem.= '</li>';
+		
 		$this->cg_active_post = $single->post_content;
 		
         return $cgitem;
@@ -99,7 +86,7 @@ if($categories){
 		$size=array();
 		$size=$this->cg_get_size();
 			
-			if((!preg_match('/\b[0-9]{3}\b/',$this->params['quality']))||(int)$this->params['quality']>100)
+			if((!is_numeric($this->params['quality']))||(int)$this->params['quality']>100)
 				$this->params['quality']='75';
 		//uses TimThumb to generate thumbnails on the fly	
 		global $cg_url;	

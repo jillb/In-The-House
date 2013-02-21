@@ -112,4 +112,59 @@ add_action( 'wp_enqueue_scripts', 'in_the_house_scripts' );
 /**
  * Implement the Custom Header feature
  */
-//require( get_template_directory() . '/inc/custom-header.php' );
+require( get_template_directory() . '/inc/custom-header.php' );
+
+
+
+/***
+ * Create a shortcode to display the festival info
+ */
+
+//[festival-long]
+function festivallong_func( $atts ){
+
+// The Query
+	query_posts( 'post_type=festival-event' );
+
+	$output = null;
+
+// The Loop
+	while ( have_posts() ) : the_post();
+	$output .= '<h3>' . get_field('title') . '</h3>';
+	$output .= '<p>' . get_field('date_and_time') . '</p>';
+	$output .= '<p>' . get_field('description') . '</p>';
+	?>
+	<?php
+	if (get_field('performers')) {
+		foreach(get_field('performers') as $performer) {
+
+			$image = get_field('performer_image1', $performer->ID);
+
+			$output .= '<div class="festival_performer_img_container"><img src="' . $image[url] . '" class="festival_performer_img" /></div>';
+
+			$output .= '<p class="festival-performer-title">' . get_the_title($performer->ID) . '</p>';
+
+			$output .= '<div class="festival_performer_bio">' . get_field('performer_bio', $performer->ID) . '</div>';
+		}
+	}
+
+	endwhile;
+
+// Reset Query
+	wp_reset_query();
+
+	return $output;
+}
+
+add_shortcode( 'festival-long', 'festivallong_func' );
+
+
+/***
+ * Add Date and Time Picker
+ ***/
+
+if(function_exists('register_field')) {
+     register_field('acf_time_picker', dirname(__File__) . '/acf_time_picker/acf_time_picker.php');
+   }
+
+?>

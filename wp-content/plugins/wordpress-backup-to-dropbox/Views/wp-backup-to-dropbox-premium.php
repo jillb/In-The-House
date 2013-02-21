@@ -45,38 +45,7 @@ try {
 }
 
 ?>
-<style>
-th {
-	text-align: left;
-	border-top: 1px solid #DEDEDE;
-}
-
-td, th {
-	border-right: 1px solid #DEDEDE;
-	border-bottom: 1px solid #DEDEDE;
-	padding: 10px;
-}
-
-table {
-	border-left: 1px solid #DEDEDE;
-}
-
-.error {
-	color: red;
-}
-
-.success {
-	color: green;
-}
-.paypal, .instructions {
-	float: left;
-	margin-right: 20px;
-}
-.errors {
-	clear: both;
-}
-</style>
-<div class="wrap">
+<div class="wrap premium">
 	<div class="icon32"><img width="36px" height="36px"
 								 src="<?php echo $uri ?>/Images/WordPressBackupToDropbox_64.png"
 								 alt="WordPress Backup to Dropbox Logo"></div>
@@ -90,7 +59,7 @@ table {
 		</p>
 		<ol class="instructions">
 			<li><?php _e('Click Buy Now and pay for your extension using PayPal', 'wpbtd'); ?></li>
-			<li><?php _e('Click Install & Acitvate to download and install the extension', 'wpbtd'); ?></li>
+			<li><?php _e('Click Download & Install to download and install the extension', 'wpbtd'); ?></li>
 			<li><?php _e('Thats it, options for your extension will be available in the menu on the left', 'wpbtd'); ?></li>
 		</ol>
 		<a class="paypal" href="#" onclick="javascript:window.open('https://www.paypal.com/au/cgi-bin/webscr?cmd=xpt/Marketing/popup/OLCWhatIsPayPal-outside','olcwhatispaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=400, height=350');">

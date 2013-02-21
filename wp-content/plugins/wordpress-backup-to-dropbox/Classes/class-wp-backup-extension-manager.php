@@ -17,15 +17,13 @@
  *          Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA.
  */
 class WP_Backup_Extension_Manager {
-	private static $instance;
-
-	private $key = 'c7d97d59e0af29b2b2aa3ca17c695f96';
+	private
+		$key = 'c7d97d59e0af29b2b2aa3ca17c695f96',
+		$objectCache
+		;
 
 	public static function construct() {
-		if (!self::$instance)
-			self::$instance = new self();
-
-		return self::$instance;
+		return new self();
 	}
 
 	public function __construct() {
@@ -74,6 +72,8 @@ class WP_Backup_Extension_Manager {
 	}
 
 	public function install($name, $file) {
+		@umask(0000);
+
 		if (!defined('FS_METHOD'))
 			define('FS_METHOD', 'direct');
 
@@ -83,6 +83,7 @@ class WP_Backup_Extension_Manager {
 			'key' => $this->key,
 			'name' => $name,
 			'site' => get_site_url(),
+			'version' => BACKUP_TO_DROPBOX_VERSION,
 		);
 
 		$download_file = download_url("{$this->get_url()}/download?" . http_build_query($params));
@@ -104,11 +105,14 @@ class WP_Backup_Extension_Manager {
 
 		unlink($download_file);
 
+		$this->activate($name, $file);
+	}
+
+	public function activate($name, $file) {
 		$extensions = get_option('backup-to-dropbox-premium-extensions');
 		$extensions[$name] = $file;
 		update_option('backup-to-dropbox-premium-extensions', $extensions);
 	}
-
 
 	public function init() {
 		$installed = $this->get_installed();
@@ -162,7 +166,12 @@ class WP_Backup_Extension_Manager {
 
 	private function get_instance($name) {
 		$class = str_replace(' ', '_', ucwords($name));
-		if (class_exists($class))
-			return new $class();
+
+		if (!isset($this->objectCache[$class])) {
+			if (class_exists($class))
+				 $this->objectCache[$class] = new $class();
+		}
+
+		return $this->objectCache[$class];
 	}
 }

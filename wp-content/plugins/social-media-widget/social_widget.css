@@ -20,16 +20,33 @@ li.Social_Widget a {
 	padding: 0 !important;
 	margin: 0 !important;
 	background: none !important;
+	text-align: center;
 }
-	
-.socialmedia-buttons img {
+
+.smw_center img,
+.smw_left img {
 	border: 0;
 	border: 0 !important;
-	margin-right: 10px !important;
 	display: inline;
 	-webkit-transition: all 0.2s ease-in;
 	-moz-transition: all 0.2s ease-in;
 	transition: all 0.2s ease;
+	margin-right: 10px !important;
+}
+
+.smw_right img {
+	border: 0;
+	border: 0 !important;
+	display: inline;
+	-webkit-transition: all 0.2s ease-in;
+	-moz-transition: all 0.2s ease-in;
+	transition: all 0.2s ease;
+	margin-left: 10px !important;
+}
+
+.icons_per_row_1 img {
+	margin-right: 0 !important;
+	margin-left: 0 !important;
 }
 
 .socialmedia-buttons a {
@@ -39,6 +56,10 @@ li.Social_Widget a {
 .socialmedia-buttons a:hover {
 	text-decoration: none;
 	border: 0;
+}
+.socialmedia-buttons img {
+	vertical-align: middle;
+	margin-bottom: 3px;
 }
 .socialmedia-buttons img.fade:hover {
 	opacity: 1 !important;

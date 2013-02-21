@@ -1,9 +1,9 @@
 ﻿=== Category Grid View Gallery ===
 Contributors: Anshul Sharma 
-Donate link:http://anshulsharma.in
+Donate link: http://www.evilgenius.anshulsharma.in/donate-me/
 Tags: category,grid,portfolio,gallery,shortcode,lightbox,featured
 Requires at least: 2.0.2
-Tested up to: 3.3
+Tested up to: 3.4.2
 Stable tag: trunk
 
 Generates a grid view of the Images grabbed from posts of a category and displays the image and titles using a shortcode. Awesome for portfolios.
@@ -14,7 +14,10 @@ This plugin provides a new way to build your Portfolios and Photo Galleries. Peo
 
 *   Uses the [cgview] shortcode. 
 
-**New in version 2**
+**New in version 2.3**
+
+*   New and improved lightbox. Now you can open complete posts inside the lightbox.
+*   Choose whether or not to show the comments with the post.
 
 *   Admin Settings panel and a Shortcode Generator.
 *   Pagination
@@ -24,9 +27,6 @@ This plugin provides a new way to build your Portfolios and Photo Galleries. Peo
 *   Light and Dark Themes.
 *   Option to pick alternate title for thumbnail from custom fields instead of post titles.
 *   Easily integrated into any template with a shortcode and a template tag.
-
-
-    
 *   Flexible. Through shortcode, user can control which category to show, the number of posts to show, the posts to exclude, the size of the thumbnail, whether or not to show the title, how to order them, quality of thumbnails, show posts only with specific tags and many more.
 *   Show posts from more than one categories.
 *   The thumbnails are generated on-the-fly and dynamically resized. It also has caching feature to reduce the load on the server.
@@ -78,6 +78,16 @@ for more support visit the <a href=\"http://www.evilgenius.anshulsharma.in/cgvie
 3. Post opened inside a lightbox
 
 == Changelog ==
+**2.3.1**
+
+- Fixed minor bug : Image quality can now be changed.
+
+
+**2.3**
+
+- Fixed issue of shortcodes and other plugins not working inside lightbox
+- Updated lightbox to display full fledged posts
+- Fixed minor bugs
 
 **2.2.4**
 

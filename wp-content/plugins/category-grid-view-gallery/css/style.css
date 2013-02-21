@@ -1,3 +1,7 @@
+/* 
+Plugin Name: Category Grid View Gallery
+Author: Anshul Sharma
+*/
 div.cgview{
 	list-style-type: none; 
 	clear:both;
@@ -91,17 +95,6 @@ ol#cg-page-controls{clear:both;position:relative;margin:0 0 0 -2px;}
 	ol#cg-page-controls li.prev{background:url(images/bg_buttons.png) no-repeat 0 -64px;}
 	ol#cg-page-controls li.next{background:url(images/bg_buttons.png) no-repeat 0 -48px;}
 
-/* Style for the Post Popup when Lightbox is used to display posts */
-
-#cg-post-container{color:#000;}
-#cg-post-title {
-width:inherit;font-family: Geneva, Arial, Helvetica, sans-serif; font-weight:bold; font-size:180%;
-padding-bottom:10px; text-align:center;
-}
-#cg-post-title a{text-decoration:none;color:#333;}
-#cg-post-content{
-}	
-
 	
 /*
     ColorBox Core Style:
@@ -140,7 +133,7 @@ padding-bottom:10px; text-align:center;
         #cboxPrevious{position:absolute; bottom:0px; left:0; color:#444;}
         #cboxNext{position:absolute; bottom:0px; left:63px; color:#444;}
         #cboxLoadingOverlay{background:#fff url(images/loading.gif) no-repeat center center;}
-        #cboxClose{position:absolute; top:0; right:0; display:block; color:#444;}
+        #cboxClose{position:absolute; top:0; right:0; display:block; color:#333; font-weight:bold; font-size:16px; padding-right:5px;font-family: Geneva, Arial, Helvetica, sans-serif;}
 
 /*
   The following fixes a problem where IE7 and IE8 replace a PNG's alpha transparency with a black fill

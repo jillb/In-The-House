@@ -18,25 +18,18 @@
  *          along with this program; if not, write to the Free Software
  *          Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA.
  */
-include_once('class-file-list.php');
 class WP_Backup_Config {
-	private static $instance;
-
-	const BACKUP_STATUS_STARTED = 0;
-	const BACKUP_STATUS_FINISHED = 1;
-	const BACKUP_STATUS_WARNING = 2;
-	const BACKUP_STATUS_FAILED = 3;
-
-	const MAX_HISTORY_ITEMS = 100;
+	const MAX_HISTORY_ITEMS = 20;
 
 	public static function construct() {
-		if (!self::$instance)
-			self::$instance = new self();
-
-		return self::$instance;
+		return new self();
 	}
 
 	public function __construct() {
+		if (!is_array(get_option('backup-to-dropbox-log'))) {
+			add_option('backup-to-dropbox-log', array(), null, 'no');
+		}
+
 		if (!is_array(get_option('backup-to-dropbox-history'))) {
 			add_option('backup-to-dropbox-history', array(), null, 'no');
 		}
@@ -45,9 +38,9 @@ class WP_Backup_Config {
 		if (!$options) {
 			$options = array(
 				'dropbox_location' => null,
-				'last_backup_time' => false,
 				'in_progress' => false,
 				'store_in_subfolder' => false,
+				'total_file_count' => 0,
 			);
 			add_option('backup-to-dropbox-options', $options, null, 'no');
 		}
@@ -63,110 +56,61 @@ class WP_Backup_Config {
 		}
 	}
 
-	private function as_array($val) {
-		if (is_array($val))
-			return $val;
-		return array();
-	}
-
-	public function get_max_file_size() {
-		$memory_limit_string = ini_get('memory_limit');
-		$memory_limit = (preg_replace('/\D/', '', $memory_limit_string) * 1048576);
-
-		$suhosin_memory_limit_string = ini_get('suhosin.memory_limit');
-		$suhosin_memory_limit = (preg_replace('/\D/', '', $suhosin_memory_limit_string) * 1048576);
-
-		if ($suhosin_memory_limit && $suhosin_memory_limit < $memory_limit) {
-			$memory_limit = $suhosin_memory_limit;
-		}
-
-		$memory_limit /= 2.5;
-
-		return $memory_limit < Dropbox_Facade::MAX_UPLOAD_SIZE ? $memory_limit : Dropbox_Facade::MAX_UPLOAD_SIZE;
-	}
-
 	public static function get_backup_dir() {
 		return WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'backups';
 	}
 
 	public function set_option($option, $value) {
-		$options = $this->as_array(get_option('backup-to-dropbox-options'));
+		$options = get_option('backup-to-dropbox-options');
 		$options[$option] = $value;
-		return $this->set_options($options);
+		update_option('backup-to-dropbox-options', $options);
+		return $this;
 	}
 
-	public function get_option($option) {
-		$options = $this->as_array(get_option('backup-to-dropbox-options'));
+	public function get_option($option, $no_cache = false) {
+		if ($no_cache)
+			wp_cache_flush();
+
+		$options = get_option('backup-to-dropbox-options');
 		return isset($options[$option]) ? $options[$option] : false;
 	}
 
-	public function get_history() {
-		$history = $this->as_array(get_option('backup-to-dropbox-history'));
-		krsort($history);
-		return $history;
-	}
-
 	public function get_actions() {
-		return $this->as_array(get_option('backup-to-dropbox-actions'));
+		return get_option('backup-to-dropbox-actions');
 	}
 
 	public function get_processed_files() {
-		return $this->as_array(get_option('backup-to-dropbox-processed-files'));
+		return get_option('backup-to-dropbox-processed-files');
 	}
 
 	public function add_processed_files($new_files) {
 		$files = $this->get_processed_files();
-		$files += $new_files;
-		update_option('backup-to-dropbox-processed-files', $files);
+		if (!is_array($files))
+			$files = array();
+
+		update_option('backup-to-dropbox-processed-files', array_merge($files, $new_files));
+		return $this;
 	}
 
 	public function set_time_limit() {
-		if (ini_get('safe_mode')) {
-			if (ini_get('max_execution_time') != 0) {
-				$this->log(self::BACKUP_STATUS_WARNING,
-							__('This php installation is running in safe mode so the time limit cannot be set.', 'wpbtd') . ' ' .
-							sprintf(__('Click %s for more information.', 'wpbtd'),
-									 '<a href="http://www.mikeyd.com.au/2011/05/24/setting-the-maximum-execution-time-when-php-is-running-in-safe-mode/">' . __('here', 'wpbtd') . '</a>'));
-			}
-		} else {
-			@set_time_limit(0);
-		}
+		@set_time_limit(0);
+
+		if (ini_get('max_execution_time') != 0)
+			@set_time_limit(300); //5 mins
+
+		if (ini_get('max_execution_time') != 300)
+			@set_time_limit(120); //2 mins
+
+		return $this;
 	}
 
 	public function set_memory_limit() {
-		if (function_exists('memory_get_usage'))
-			@ini_set('memory_limit', BACKUP_TO_DROPBOX_MEMORY_LIMIT .'M');
-
-		return (int)rtrim(ini_get('memory_limit'), 'M');
-	}
-
-	public function set_current_action($msg) {
-		$actions = $this->as_array(get_option('backup-to-dropbox-actions'));
-		$actions[] = array(
-			'time' => strtotime(current_time('mysql')),
-			'message' => $msg,
-		);
-		update_option('backup-to-dropbox-actions', $actions);
-	}
-
-	public function in_progress() {
-		return $this->get_option('in_progress');
+		@ini_set('memory_limit', WP_MAX_MEMORY_LIMIT);
+		return $this;
 	}
 
 	public function is_scheduled() {
 		return wp_get_schedule('execute_instant_drobox_backup') !== false;
-	}
-
-	public function set_in_progress($bool) {
-		$this->set_option('in_progress', $bool);
-	}
-
-	public function get_current_action() {
-		return end($this->as_array(get_option('backup-to-dropbox-actions')));
-	}
-
-	public function clear_history() {
-		update_option('backup-to-dropbox-history', array());
 	}
 
 	public function set_schedule($day, $time, $frequency) {
@@ -200,6 +144,7 @@ class WP_Backup_Config {
 		$server_time = strtotime(date('Y-m-d H') . ':00:00') + ($scheduled_time - $blog_time);
 
 		wp_schedule_event($server_time, $frequency, 'execute_periodic_drobox_backup');
+		return $this;
 	}
 
 	public function get_schedule() {
@@ -214,54 +159,48 @@ class WP_Backup_Config {
 		return $schedule;
 	}
 
-	public function set_options($options) {
-		static $regex = '/[^A-Za-z0-9-_.@]/';
-		$errors = array();
-		$error_msg = __('The sub directory must only contain alphanumeric characters.', 'wpbtd');
-
-		foreach ($options as $key => $value) {
-			preg_match($regex, $value, $matches);
-			if (!empty($matches)) {
-				$errors[$key] = array(
-					'original' => $value,
-					'message' => $error_msg
-				);
-			}
-		}
-
-		if (empty($errors)) {
-			$newOptions = array();
-			foreach ($options as $key => $value)
-				$newOptions[$key] = $value;
-
-			$options = $this->as_array(get_option('backup-to-dropbox-options'));
-			foreach ($newOptions as $key => $value) {
-				$options[$key] = $newOptions[$key];
-			}
-
-			update_option('backup-to-dropbox-options', $options);
-		}
-
-		return $errors;
+	public function clear_history() {
+		update_option('backup-to-dropbox-history', array());
 	}
 
-	public function set_last_backup_time($time) {
-		$this->set_option('last_backup_time', $time);
+	public function get_history() {
+		return get_option('backup-to-dropbox-history');
 	}
 
-	public function clean_up() {
+	public function get_dropbox_path($source, $file, $root = false) {
+		$dropbox_location = null;
+		if ($this->get_option('store_in_subfolder'))
+			$dropbox_location = $this->get_option('dropbox_location');
+
+		if ($root)
+			return $dropbox_location;
+
+		$source = rtrim($source, DIRECTORY_SEPARATOR);
+
+		return ltrim(dirname(str_replace($source, $dropbox_location, $file)), DIRECTORY_SEPARATOR);
+	}
+
+	public function log_finished_time() {
+		$history = $this->get_history();
+		$history[] = time();
+
+		if (count($history) > self::MAX_HISTORY_ITEMS)
+			array_shift($history);
+
+		update_option('backup-to-dropbox-history', $history);
+		return $this;
+	}
+
+	public function complete() {
 		wp_clear_scheduled_hook('monitor_dropbox_backup_hook');
 		wp_clear_scheduled_hook('run_dropbox_backup_hook');
-		update_option('backup-to-dropbox-actions', array());
-		update_option('backup-to-dropbox-processed-files', array());
-	}
+		wp_clear_scheduled_hook('execute_instant_drobox_backup');
 
-	public function log($status, $msg = null) {
-		$history = $this->as_array(get_option('backup-to-dropbox-history'));
-		if (count($history) >= self::MAX_HISTORY_ITEMS) {
-			array_shift($history);
-		}
-		$history[] = array(strtotime(current_time('mysql')), $status, $msg);
-		update_option('backup-to-dropbox-history', $history);
+		update_option('backup-to-dropbox-processed-files', array());
+
+		$this->set_option('in_progress', false);
+		$this->set_option('is_running', false);
+
+		return $this;
 	}
 }

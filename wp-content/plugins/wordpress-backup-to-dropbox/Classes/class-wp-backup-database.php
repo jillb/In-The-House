@@ -20,6 +20,7 @@
  */
 abstract class WP_Backup_Database {
 	const SELECT_QUERY_LIMIT = 10;
+	const WAIT_TIMEOUT = 600; //10 minutes
 
 	private $handle;
 	private $type;
@@ -32,9 +33,13 @@ abstract class WP_Backup_Database {
 	public function __construct($type, $wpdb = null) {
 		if (!$wpdb) global $wpdb;
 
+		WP_Backup::create_dump_dir();
+
 		$this->type = $type;
 		$this->database = $wpdb;
 		$this->config = WP_Backup_Config::construct();
+
+		$this->set_wait_timeout();
 	}
 
 	public function remove_file() {
@@ -43,7 +48,11 @@ abstract class WP_Backup_Database {
 			unlink($sql_file_name);
 	}
 
-	private function get_file() {
+	private function set_wait_timeout() {
+		$this->database->query("SET SESSION wait_timeout=" . self::WAIT_TIMEOUT);
+	}
+
+	public function get_file() {
 		if (!$this->type)
 			throw new Exception();
 
@@ -63,7 +72,7 @@ abstract class WP_Backup_Database {
 
 		if (!is_writable($dump_location)) {
 			$msg = sprintf(__("A database backup cannot be created because WordPress does not have write access to '%s', please ensure this directory has write access.", 'wpbtd'), $dump_location);
-			$this->config->log(WP_Backup_Config::BACKUP_STATUS_WARNING, $msg);
+			WP_Backup_Logger::log($msg);
 			return false;
 		}
 
@@ -130,7 +139,7 @@ abstract class WP_Backup_Database {
 	}
 
 	protected function write_to_file($out) {
-		if (!fwrite($this->handle, $out))
+		if (fwrite($this->handle, $out) === false)
 			throw new Exception(__('Error writing to sql dump file.', 'wpbtd'));
 	}
 

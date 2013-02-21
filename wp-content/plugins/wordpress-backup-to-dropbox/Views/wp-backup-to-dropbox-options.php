@@ -32,18 +32,24 @@ try {
 	$config = WP_Backup_Config::construct();
 	$backup = new WP_Backup();
 
-	$disable_backup_now = $config->in_progress();
+	$backup->create_dump_dir();
+
+	$disable_backup_now = $config->get_option('in_progress');
 
 	//We have a form submit so update the schedule and options
-	if (array_key_exists('save_changes', $_POST)) {
+	if (array_key_exists('wpb2d_save_changes', $_POST)) {
 		check_admin_referer('backup_to_dropbox_options_save');
-		$config->set_schedule($_POST['day'], $_POST['time'], $_POST['frequency']);
-		$options = array(
-			'store_in_subfolder' => $_POST['store_in_subfolder'] == "on",
-			'dump_location' => $_POST['dump_location'],
-			'dropbox_location' => $_POST['dropbox_location'],
-		);
-		$validation_errors = $config->set_options($options);
+
+		if (preg_match('/[^A-Za-z0-9-_.\/]/', $_POST['dropbox_location'])) {
+			$error_msg = __('The sub directory must only contain alphanumeric characters.', 'wpbtd');
+			$dropbox_location = $_POST['dropbox_location'];
+			$store_in_subfolder = true;
+		} else {
+			$config
+				->set_schedule($_POST['day'], $_POST['time'], $_POST['frequency'])
+				->set_option('store_in_subfolder', $_POST['store_in_subfolder'] == "on")
+				->set_option('dropbox_location', $_POST['dropbox_location']);
+		}
 	} else if (array_key_exists('unlink', $_POST)) {
 		check_admin_referer('backup_to_dropbox_options_save');
 		$dropbox->unlink_account();
@@ -58,21 +64,9 @@ try {
 		$frequency = 'weekly';
 	}
 
-	$dump_location = $config->get_option('dump_location');
-	$dropbox_location = $config->get_option('dropbox_location');
-	$store_in_subfolder = $config->get_option('store_in_subfolder');
-
-	$backup->create_dump_dir();
-	$backup->create_silence_file();
-
-	if (!empty($validation_errors)) {
-		$dump_location = array_key_exists('dump_location', $validation_errors)
-				? $validation_errors['dump_location']['original'] : $dump_location;
-
-		if (array_key_exists('dropbox_location', $validation_errors)) {
-			$dropbox_location = $validation_errors['dropbox_location']['original'];
-			$store_in_subfolder = true;
-		}
+	if (!isset($error_msg)) {
+		$dropbox_location = $config->get_option('dropbox_location');
+		$store_in_subfolder = $config->get_option('store_in_subfolder');
 	}
 
 	$time = date('H:i', $unixtime);
@@ -104,10 +98,21 @@ try {
 			multiFolder: false
 		});
 
-		$('#toggle-all').click(function (e) {
-			$('.checkbox').click();
-			e.preventDefault();
-		});
+		$('#togglers .button').click(function() {
+			switch ($(this).attr('rel')) {
+			case "all":
+				// clicking an unchecked, expanded directory triggers a collapse which is confusing
+				// skip expanded directories when checking everything (they'll auto-check themselves)
+				$('#file_tree .checkbox').not('.checked, .partial, .directory.expanded>.checkbox').click();
+				break;
+			case "none":
+				$('#file_tree .checkbox.checked').click();
+				break;
+			case "invert":
+				$('#file_tree .checkbox').not('.partial, .directory.expanded>.checkbox').click();
+				break;
+			}
+		})
 
 		$('#store_in_subfolder').click(function (e) {
 			if ($('#store_in_subfolder').is(':checked')) {
@@ -131,71 +136,23 @@ try {
 		document.getElementById('authorize').style.visibility = 'hidden';
 	}
 </script>
-<style type="text/css">
-	.backup_error {
-		margin-left: 10px;
-		color: red;
-	}
-
-	.backup_ok {
-		margin-left: 10px;
-		color: green;
-	}
-
-	.backup_warning {
-		margin-left: 10px;
-		color: orange;
-	}
-
-	.history_box {
-		max-height: 140px;
-		overflow-y: scroll;
-	}
-
-	.message_box {
-		font-weight: bold;
-		color: green;
-	}
-
-	#file_tree {
-		margin-left: 10px;
-		width: 400px;
-		max-height: 200px;
-		overflow-y: scroll;
-	}
-
-	#toggle-all {
-		margin-left: 348px;
-	}
-
-	.bump {
-		margin: 10px 0 0 10px;
-	}
-
-	<?php if (!$store_in_subfolder): ?>
-	.dropbox_location {
-		display: none;
-	}
-	<?php endif; ?>
-</style>
 	<div class="wrap">
 	<div class="icon32"><img width="36px" height="36px"
 							 src="<?php echo $uri ?>/Images/WordPressBackupToDropbox_64.png"
 							 alt="Wordpress Backup to Dropbox Logo"></div>
 <h2><?php _e('WordPress Backup to Dropbox', 'wpbtd'); ?></h2>
 <p class="description"><?php printf(__('Version %s', 'wpbtd'), BACKUP_TO_DROPBOX_VERSION) ?></p>
-	<?php
-		if ($dropbox->is_authorized()) {
+	<?php if ($dropbox->is_authorized()) {
 		$account_info = $dropbox->get_account_info();
-		$used = round(($account_info['quota_info']['quota'] - ($account_info['quota_info']['normal'] + $account_info['quota_info']['shared'])) / 1073741824, 1);
-		$quota = round($account_info['quota_info']['quota'] / 1073741824, 1);
-		?>
+		$used = round(($account_info->quota_info->quota - ($account_info->quota_info->normal + $account_info->quota_info->shared)) / 1073741824, 1);
+		$quota = round($account_info->quota_info->quota / 1073741824, 1);
+	?>
 	<h3><?php _e('Dropbox Account Details', 'wpbtd'); ?></h3>
 	<form id="backup_to_dropbox_options" name="backup_to_dropbox_options"
 		  action="admin.php?page=backup-to-dropbox" method="post">
 	<p class="bump">
 		<?php echo
-				$account_info['display_name'] . ', ' .
+				$account_info->display_name . ', ' .
 				__('you have', 'wpbtd') . ' ' .
 				$used .
 				'<acronym title="' . __('Gigabyte', 'wpbtd') . '">GB</acronym> ' .
@@ -215,28 +172,23 @@ try {
 			<?php } ?>
 		<h3><?php _e('History', 'wpbtd'); ?></h3>
 		<?php
-		$backup_history = $config->get_history();
+		$backup_history = array_reverse($config->get_history());
 		if ($backup_history) {
-			echo '<div class="history_box">';
-			foreach ($backup_history as $hist) {
-				list($backup_time, $status, $msg) = $hist;
-				$backup_date = date('Y-m-d', $backup_time);
-				$backup_time_str = date('H:i:s', $backup_time);
-				switch ($status) {
-					case WP_Backup_Config::BACKUP_STATUS_STARTED:
-						echo "<span class='backup_ok'>" . sprintf(__('Backup started on %s at %s', 'wpbtd'), $backup_date, $backup_time_str) . "</span><br />";
-						break;
-					case WP_Backup_Config::BACKUP_STATUS_FINISHED:
-						echo "<span class='backup_ok'>" . sprintf(__('Backup completed on %s at %s', 'wpbtd'), $backup_date, $backup_time_str) . "</span><br />";
-						break;
-					case WP_Backup_Config::BACKUP_STATUS_WARNING:
-						echo "<span class='backup_warning'>" . sprintf(__('Backup warning on %s at %s: %s', 'wpbtd'), $backup_date, $backup_time_str, $msg) . "</span><br />";
-						break;
-					default:
-						echo "<span class='backup_error'>" . sprintf(__('Backup error on %s at %s: %s', 'wpbtd'), $backup_date, $backup_time_str, $msg) . "</span><br />";
-				}
+			echo '<ol class="history_box">';
+			foreach ($backup_history as $backup_time) {
+
+				if (is_array($backup_time))
+					continue;
+
+				$blog_time = strtotime(date('Y-m-d H', strtotime(current_time('mysql'))) . ':00:00');
+				$blog_time += $backup_time - strtotime(date('Y-m-d H') . ':00:00');
+
+				$backup_date = date('l F j, Y', $blog_time);
+				$backup_time_str = date('H:i:s', $blog_time);
+
+				echo '<li>' . sprintf(__('Backup completed on %s at %s.'), $backup_date, $backup_time_str) . '</li>';
 			}
-			echo '</div>';
+			echo '</ol>';
 			echo '<input type="submit" id="clear_history" name="clear_history"" class="bump button-secondary" value="' . __('Clear history', 'wpbtd') . '">';
 		} else {
 			echo '<p style="margin-left: 10px;">' . __('No history', 'wpbtd') . '</p>';
@@ -253,12 +205,12 @@ try {
 				<input name="store_in_subfolder" type="checkbox" id="store_in_subfolder"
 					   <?php echo $store_in_subfolder ? 'checked="checked"' : ''; ?> >
 
-				<span class="dropbox_location">
+				<span class="dropbox_location <?php if (!$store_in_subfolder) echo 'hide' ?>">
 					<input name="dropbox_location" type="text" id="dropbox_location"
 						   value="<?php echo $dropbox_location; ?>" class="regular-text code">
-					<?php if ($validation_errors && array_key_exists('dropbox_location', $validation_errors)) { ?>
+					<?php if (isset($error_msg)) { ?>
 					<br/><span class="description"
-							   style="color: red"><?php echo $validation_errors['dropbox_location']['message'] ?></span>
+							   style="color: red"><?php echo $error_msg ?></span>
 					<?php } ?>
 				</span>
 			</td>
@@ -378,11 +330,22 @@ try {
 			<strong><?php _e('Please Note:', 'wpbtd'); ?></strong>&nbsp;<?php _e('Your SQL dump file will always be backed up regardless of what is selected below.', 'wpbtd'); ?>
 		</span>
 	</p>
-	<div id="file_tree"></div>
-	<a href="#" id="toggle-all">toggle all</a>
+	<div id="file_tree">
+		<div id="circleG" class="start">
+			<div id="circleG_1" class="circleG"></div>
+			<div id="circleG_2" class="circleG"></div>
+			<div id="circleG_3" class="circleG"></div>
+		</div>
+		<div class="loading start"><?php _e('Loading...') ?></div>
+	</div>
+	<div id="togglers"><?php _e("Exclude:", 'wpbtd'); ?>
+		<span class="button" rel="all" href="#"><?php _e("All", 'wpbtd'); ?></span>
+		<span class="button" rel="none" href="#"><?php _e("None", 'wpbtd'); ?></span>
+		<span class="button" rel="invert" href="#"><?php _e("Inverse", 'wpbtd'); ?></span>
+	</div>
 	<!--<![endif]-->
 	<p class="submit">
-		<input type="submit" id="save_changes" name="save_changes" class="button-primary" value="<?php _e('Save Changes', 'wpbtd'); ?>">
+		<input type="submit" id="wpb2d_save_changes" name="wpb2d_save_changes" class="button-primary" value="<?php _e('Save Changes', 'wpbtd'); ?>">
 	</p>
 		<?php wp_nonce_field('backup_to_dropbox_options_save'); ?>
 	</form>
@@ -412,10 +375,12 @@ try {
 	}
 } catch (Exception $e) {
 	echo '<h3>Error</h3>';
-	echo '<p>' . __('There was a fatal error loading WordPress Backup to Dropbox, please reload the page and try again.', 'wpbtd') . '</h3>';
+	echo '<p>' . __('There was a fatal error loading WordPress Backup to Dropbox. Please fix the problems listed and reload the page.', 'wpbtd') . '</h3>';
 	echo '<p>' . __('If the problem persists please re-install WordPress Backup to Dropbox.', 'wpbtd') . '</h3>';
 	echo '<p><strong>' . __('Error message:') . '</strong> ' . $e->getMessage() . '</p>';
-	$dropbox->unlink_account();
+
+	if ($dropbox)
+		$dropbox->unlink_account();
 }
 ?>
 </div>

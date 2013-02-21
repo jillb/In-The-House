@@ -133,11 +133,19 @@ function cg_options() {
         		</td>
        		</tr>
             <tr>
-        		<th scope="row"><p><?php _e("Lightbox Width","cgview"); ?><span><?php _e("Enter the width of the lightbox in pixels. (Default: 700px)", "cgview"); ?></span></p></th>
+        		<th scope="row"><p><?php _e("Lightbox Dimensions","cgview"); ?><span><?php _e("Enter the dimensions of the lightbox in pixels. (Default: 700px x 600px)", "cgview"); ?></span></p></th>
         		<td>
-         			<input type="text" size="4" name="lightbox_width" value="<?php echo get_cgview_option('lightbox_width'); ?>"/>px
+         			<input type="text" size="4" name="lightbox_width" value="<?php echo get_cgview_option('lightbox_width'); ?>"/>width(px)&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" size="4" name="lightbox_height" value="<?php echo get_cgview_option('lightbox_height'); ?>"/>height(px)</br>
+                    <span>Note: To make the height of the lightbox dynamic, set Height : 0 px. This will make the lightbox height equal to the length of the post. </span>
          		</td>
-         	</tr>            
+         	</tr> 
+            <tr>
+        		<th scope="row"><p><?php _e("Show Comments","cgview"); ?><span><?php _e("If yes, it will load the post comments in the lightbox", "cgview"); ?></span></p></th>
+        		<td>
+         			<label for="comments_tag"><input name="load_comments" id="load_comments" type="checkbox" class="checkbox" value="1" <?php checked(1, get_cgview_option('load_comments')) ?> /></label>
+         		</td>
+         	</tr>           
             <tr>
         		<th scope="row"><p><?php _e("Powered by link","cgview"); ?><span><?php _e("Do you wish to support the author by putting a small link at the bottom?", "cgview"); ?></span></p></th>
         		<td>
@@ -284,7 +292,7 @@ by <a href="<?php echo AUTHOR_URI; ?>"><?php echo PLUGIN_AUTHOR; ?></a></p>
     </div>
 <p><span style="font-size:12px;"><a href="<?php echo PLUGIN_URI; ?>"  target="_blank">Plugin Home</a><br /><br />
 	<a href="http://www.facebook.com/evilgeniuslabs" target="_blank">Facebook Page</a></span><br /><br />
-    <a href="http://www.evilgenius.anshulsharma.in/contact/" target="_blank">Support the Author - Donate</a></span><br /><br />
+    <a href="http://www.evilgenius.anshulsharma.in/donate-me/" target="_blank">Support the Author - Donate</a></span><br /><br />
     <span style="color:#aaa;font:19px bold;">.::.</span></p>
 </div>
 </div>

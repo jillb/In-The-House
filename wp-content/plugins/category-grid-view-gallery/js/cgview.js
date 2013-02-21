@@ -3,7 +3,8 @@
 jQuery(document).ready(function($) {
 	// To remove the css class for CSS fallback strategy
 	$("div.cgview ul li div").removeClass("cgnojs");
-							
+	
+						
   $("div.cgview li").mouseenter(function(){
   	var d = this.getElementsByTagName("div");
 	if($(d[0]).attr('class')=='cgback hover'){

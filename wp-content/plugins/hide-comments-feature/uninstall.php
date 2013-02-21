@@ -16,15 +16,14 @@ if ( ! function_exists( 'add_action' ) ) {
 // Make sure that we are uninstalling
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
     exit();
+	
 }
 
 
 
 // Delete options from DB
-delete_option( 'hide_comments_version' );
+delete_option( 'hide_comments_plugin_version' );
 
 
 
 // Bye! See you soon!
-
-?>

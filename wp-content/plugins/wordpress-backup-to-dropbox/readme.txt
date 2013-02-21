@@ -3,14 +3,14 @@ Contributors: michael.dewildt
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=38SEXDYP28CFA
 Tags: backup, dropbox
 Requires at least: 3.0
-Tested up to: 3.4.1
+Tested up to: 3.5.1
 Stable tag: trunk
 
 Keep your valuable WordPress website, its media and database backed up to Dropbox in minutes with this sleek, easy to use plugin.
 
 == Description ==
 
-[WordPress Backup to Dropbox](http://wpb2d.com) has been created to give you piece of mind that your blog is backed up on a regular basis.
+[WordPress Backup to Dropbox](http://wpb2d.com) has been created to give you peace of mind that your blog is backed up on a regular basis.
 
 Just choose a day, time and how often you wish yor backup to be performed and kick back and wait for your websites files
 and a SQL dump of its database to be dropped in your Dropbox!
@@ -35,9 +35,11 @@ Once installed, the authorization process is easy -
 
 = Minimum Requirements =
 
-1. PHP 5.2 or higher
+1. PHP 5.2.16 or higher with [cURL support](http://www.php.net/manual/en/curl.installation.php)
 
 2. [A Dropbox account](https://www.dropbox.com/referrals/NTM1NTcwNjc5)
+
+Note: Version 1.3 of the plugin supports PHP < 5.2.16 and can be [downloaded here.](http://downloads.wordpress.org/plugin/wordpress-backup-to-dropbox.1.3.zip)
 
 = Errors and Warnings =
 
@@ -63,10 +65,6 @@ Premium extensions can be purchased securely using [PayPal](http://www.paypal.co
 = More Information =
 
 For news and updates please visit my blog - http://www.mikeyd.com.au/category/wordpress-backup-to-dropbox/
-
-= Issues =
-
-If you notice any bugs or want to request a feature please do so on GitHub - http://github.com/michaeldewildt/WordPress-Backup-to-Dropbox/issues
 
 = Translators =
 
@@ -102,16 +100,28 @@ By default your backup is located in 'Applications/wpb2d'. You can move the 'wpb
 
 = Nothing seems to happen when backing up, whats up? =
 
-Your server settings (.htaccess file) might be blocking wp-cron which is required to start the backup process. Please refer to the following thread for information on to solve the issue - http://wordpress.org/support/topic/plugin-wordpress-backup-to-dropbox-nothing-seems-to-happen-when-backing-up
+Your server settings (.htaccess file) might be blocking wp-cron which is required to start the backup process. You will need to add the following to a .htaccess file in your WordPress root directory:
+
+<Files "wp-cron.php">
+Allow from All
+Satisfy Any
+</Files>
+
+For information please refer to this thread - http://wordpress.org/support/topic/plugin-wordpress-backup-to-dropbox-nothing-seems-to-happen-when-backing-up
 
 = Why doesn't my backup execute at the exact time I set? =
 
-The backup is executed using WordPress' scheduling system that, unlike a cron job, kicks of tasks the next time your
-blog is accessed after the scheduled time.
+This could be because your blog's timezone is not set. By defauly it is set to UTC+0, so if you set your backup to start at midnight it will
+be kicked off at 4pm (PST) in LA. You can change your blogs timezone in WordPress' General Settings.
+
+If your timezone is correct then WordPress' scheduling system could be the problem. Unlike a cron job, kicks of tasks the next time your
+blog is accessed after the scheduled time. If you are using a caching solution then the plugin may be blocking calls to wp-cron.php, if so
+you will need to whitelist this file in the plugin settings.
 
 = Where is my database SQL dump located? =
-The database is backed up into a file named '[database name]-backup.sql'. It will be will be found at the path 'wp-content/backups' within
-the App folder of your Dropbox.
+The database is backed up into two files named '[database name]-backup-core.sql' that contains all the core WordPress tables and data,
+and '[database name]-backup-plugins.sql' that cotains tables and data related to your plugins.
+These files will be will be found at the path 'wp-content/backups' within the App folder of your Dropbox.
 
 = Wow! My second backup was heaps faster. Why is that? =
 In order to save time and bandwidth the plugin only uploads files that have changed since the last backup. The only exception
@@ -134,10 +144,60 @@ Opera, etc. In order to use the widget you have no choice but to update to IE8 o
 
 == Screenshots ==
 
-1. WordPress Backup to Dropbox options
-2. WordPress Backup to Dropbox monitor
+1. The Settings: Choose the date, time, frequency and what files or directories you wan't to exclude.
+2. The Log: Know what you backup is doing.
+3. Premium Extensions: Add extra functionality with ease and a 60 day money back guarantee.
 
 == Changelog ==
+
+= 1.4.4 =
+* Attempt to set the memory limit WP_MAX_MEMORY_LIMIT and have a better go at setting the time limit
+* Added .dropbox to the ignored files list as Dropbox does not accept it
+* Added retry logic for normal uploads that receive errors
+* Updated the Dropbox API lib that includes retries for chunked uploads
+* Fixed a minor potential XSS issue when viewing the backup log, thanks Mahadev Subedi (@blinkms) for the heads up
+
+= 1.4.3 =
+* Fixed issue where autorise link was invalid
+* Fixed session has time out issue
+* Added error message for users who's server has not connection to the internet
+* Added depricated page for people using PHP < 5.2.16
+* Added priority support premium extension
+
+= 1.4.2 =
+* Fixed the uninstaller
+* Fixed issue where files over 10mb where not being uploaded in their correct directories
+* FIxed a fatal error on a corrupt processed files list
+
+= 1.4.1 =
+* Fixed exclude widget checkbox css position
+* Fixed issue where all files where being uploaded in subsequent backups
+* Fixed cannot access empty property fatal error
+* Moved the safe mode warning out of the settings page to the backup log
+* The backup log now logs to a file in 'wp-content/backups' that is uploaded to Dropbox at the end of a backup
+* Allow for multiple emails in the email extension
+* Allow for sub folders in the store in subfolder setting
+
+= 1.4 =
+
+* Implemented a brand new Dropbox API library that utilises chunked uploads for large files.
+* Updated the Dutch translations.
+* Added the umsak funciton to attempt to run the backup under elevated privileges.
+* Set the memory limit to -1 (unlimited) for servers that allow it, the backup will still only use what it needs.
+* Added 'unknown%' to the backup estimation instead of the initial estimate to avoid confusion.
+* Added a safe mode warning to the settings page so that users can diagnose fix issues related to PHP memory and time limits
+* Set the mysql wait time out at the start of a backup
+* The file exclude widget has been updated to toggle excluded files better thanks to [Joe Maller](http://github.com/joemaller). In addition ticks have been replaced with crosses to better portray its an exclude function.
+* Fixed some minor issues in the OAuth flow.
+* Fixed an issue where options will not update due to validation of an option from an older version. This affected starting and stoping of backups, updating email adresses and other options in certain circumstances.
+* Fixed up the backup time estimation so it cannot be set to zero or an impossibly low number.
+* Fixed memory limit issues in the file list by adding a max directory depth of 10
+* Prefixed save actions with wpb2d to avoid clashes with other plugins
+* Fixed an issue where WP option cache was interferring with stopping backups
+
+= 1.3 =
+* Overhauled logging of a backup to get more visibility of what is happening during a backup.
+* More info here => http://www.mikeyd.com.au/2012/10/04/wordpress-backup-to-dropbox-1-3/
 
 = 1.2.2 =
 * Removed zipping of the SQL dump due to random PHP memory leaks... intersingly the Zip extension does not share the same issue. Ah PHP you keep me on my toes!
@@ -173,4 +233,4 @@ Opera, etc. In order to use the widget you have no choice but to update to IE8 o
 
 == Upgrade Notice ==
 
-* Removed zipping of the SQL dump due to random PHP memory leaks, please update ASAP. I am looking into a new Dropbox API to solve issues with uploading large SQL files so hold tight if your in this category.
+* After every update make sure that you check that your settings are still correct and run a test backup.
