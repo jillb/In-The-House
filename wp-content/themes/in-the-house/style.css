@@ -1062,6 +1062,15 @@ a#performancesandfestival_btn {
 	background: #efec8f;//  #E2ED8F;
 }
 
+.entry-content .tablepress a {
+	color: #404040;
+	text-decoration: none;
+}
+
+.festival_performer {
+	padding-top: 2em;
+}
+
 .festival_performer_img_container {
 	float: left;
 	width: 220px;

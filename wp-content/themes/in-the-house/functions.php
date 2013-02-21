@@ -130,7 +130,7 @@ function festivallong_func( $atts ){
 
 // The Loop
 	while ( have_posts() ) : the_post();
-	$output .= '<h3>' . get_field('title') . '</h3>';
+	$output .= '<div id="' . str_replace(' ', '', get_field('title')) . '" class="festival_performer"><h3>' . get_field('title') . '</h3>';
 	$output .= '<p>' . get_field('date_and_time') . '</p>';
 	$output .= '<p>' . get_field('description') . '</p>';
 	?>
@@ -148,10 +148,13 @@ function festivallong_func( $atts ){
 		}
 	}
 
+	$output .= '</div>';
+
 	endwhile;
 
 // Reset Query
 	wp_reset_query();
+
 
 	return $output;
 }
