@@ -43,6 +43,7 @@
 </head>
 
 <body <?php body_class(); ?>>
+
 <div id="page" class="hfeed site">
 	<?php do_action( 'before' ); ?>
 	<?php if (! is_home()) { ?>

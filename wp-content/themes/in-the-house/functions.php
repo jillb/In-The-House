@@ -130,8 +130,8 @@ function festivallong_func( $atts ){
 
 // The Loop
 	while ( have_posts() ) : the_post();
-	$output .= '<div id="' . str_replace(' ', '', get_field('title')) . '" class="festival_performer"><h3>' . get_field('title') . '</h3>';
-	$output .= '<p>' . get_field('date_and_time') . '</p>';
+	$output .= '<div id="' . str_replace(' ', '', get_field('title')) . '" class="festival_performance"><h3>' . get_field('title') . '</h3>';
+	$output .= '<p class="festival_performance_datetime">' . get_field('date_and_time') . '</p>';
 	$output .= '<p>' . get_field('description') . '</p>';
 	?>
 	<?php
@@ -140,9 +140,9 @@ function festivallong_func( $atts ){
 
 			$image = get_field('performer_image1', $performer->ID);
 
-			$output .= '<div class="festival_performer_img_container"><img src="' . $image[url] . '" class="festival_performer_img" /></div>';
-
 			$output .= '<p class="festival-performer-title">' . get_the_title($performer->ID) . '</p>';
+
+			$output .= '<div class="festival_performer_img_container"><img src="' . $image[url] . '" class="festival_performer_img" /></div>';
 
 			$output .= '<div class="festival_performer_bio">' . get_field('performer_bio', $performer->ID) . '</div>';
 		}

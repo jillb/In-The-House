@@ -208,30 +208,35 @@ button,
 html input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-	border: 1px solid #ccc;
-	border-color: #ccc #ccc #bbb #ccc;
+    background: none repeat scroll 0 0 #C8C1B3;
+
+
+	border: 1px solid #A39880;
+
 	border-radius: 3px;
-	background: #e6e6e6;
+	background: #C8C1B3;
 	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), inset 0 15px 17px rgba(255,255,255,0.5), inset 0 -5px 12px rgba(0,0,0,0.05);
 	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), inset 0 15px 17px rgba(255,255,255,0.5), inset 0 -5px 12px rgba(0,0,0,0.05);
 	box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), inset 0 15px 17px rgba(255,255,255,0.5), inset 0 -5px 12px rgba(0,0,0,0.05);
-	color: rgba(0,0,0,.8);
+	color: #333;
 	cursor: pointer; /* Improves usability and consistency of cursor style between image-type 'input' and others */
 	-webkit-appearance: button; /* Corrects inability to style clickable 'input' types in iOS */
 	font-size: 12px;
 	font-size: 1.4rem;
 	line-height: 1;
 	padding: 1.12em 1.5em 1em;
-	text-shadow: 0 1px 0 rgba(255,255,255,.8);
 }
 button:hover,
 html input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover {
-	border-color: #ccc #bbb #aaa #bbb;
-	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), inset 0 15px 17px rgba(255,255,255,0.8), inset 0 -5px 12px rgba(0,0,0,0.02);
-	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), inset 0 15px 17px rgba(255,255,255,0.8), inset 0 -5px 12px rgba(0,0,0,0.02);
-	box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), inset 0 15px 17px rgba(255,255,255,0.8), inset 0 -5px 12px rgba(0,0,0,0.02);
+/*	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), inset 0 15px 17px rgba(255,255,255,0.5), inset 0 -5px 12px rgba(0,0,0,0.05);
+	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), inset 0 15px 17px rgba(255,255,255,0.5), inset 0 -5px 12px rgba(0,0,0,0.05);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), inset 0 15px 17px rgba(255,255,255,0.5), inset 0 -5px 12px rgba(0,0,0,0.05);*/
+
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 }
 button:focus,
 html input[type="button"]:focus,
@@ -241,10 +246,13 @@ button:active,
 html input[type="button"]:active,
 input[type="reset"]:active,
 input[type="submit"]:active {
-	border-color: #aaa #bbb #bbb #bbb;
+/*	border-color: #aaa #bbb #bbb #bbb;
 	-webkit-box-shadow: inset 0 -1px 0 rgba(255,255,255,0.5), inset 0 2px 5px rgba(0,0,0,0.15);
 	-moz-box-shadow: inset 0 -1px 0 rgba(255,255,255,0.5), inset 0 2px 5px rgba(0,0,0,0.15);
-	box-shadow: inset 0 -1px 0 rgba(255,255,255,0.5), inset 0 2px 5px rgba(0,0,0,0.15);
+	box-shadow: inset 0 -1px 0 rgba(255,255,255,0.5), inset 0 2px 5px rgba(0,0,0,0.15);*/
+		-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 }
 input[type="checkbox"],
 input[type="radio"] {
@@ -583,11 +591,6 @@ body.home {
 	  	font-size: 1.8em;
 	  }
 
-	  .festival-performer-title {
-	  	color: #CC114F;
-	  	font-size: 1.4em;
-	  }
-
 
 	  /*** navigation ***/
 
@@ -634,7 +637,7 @@ body.home {
 	  	text-transform: none;
 	  	top: 2.44em;
 	  	border-left: 2px solid #373739;
-	  	padding-left: 1em;
+	  	padding-left: 0.3em;
 	  }
 	  .main-navigation ul ul ul {
 	  	left: 100%;
@@ -643,12 +646,14 @@ body.home {
 	  .main-navigation ul ul a {
 	  	/*	width: 200px;*/
 	  	color: #ffffeb;
-	  	border-right: 2px solid #373739;
-	  	padding-right: 1em;
+	 /* 	border-right: 2px solid #373739;*/
+	  	padding: 0.25em 0;
+	  	margin-left: 0.75em;
 	  }
 	  .main-navigation ul ul li {
 	  	display: inline;
-	  	padding-right: 20px;
+	  	 padding-right: 0.75em;
+	  	border-right: 2px solid #373739;
 	  }
 	  .main-navigation li:hover > a {
 	  }
@@ -670,55 +675,60 @@ body.home {
 	  .main-small-navigation .menu {
 	  	display: none;
 	  }
-/**** test ****/
+	  /**** test ****/
 
 	  .main-navigation ul ul ul {
-    display: none;
-    float: left;
-    left: -30px;
-    margin: 0;
-    position: absolute;
-    top: 1.8em;
-    width: 188px;
-    z-index: 99999;
-    border: 0;
-}
-.main-navigation ul ul ul ul {
-    left: 100%;
-    top: 0;
-}
-.main-navigation ul ul ul a {
-    background: none repeat scroll 0 0 #464547;
-    color: #FFFFEB;
-    font-size: 13px;
-    font-weight: normal;
-    height: auto;
-    line-height: 1.4em;
-    padding: 10px;
-    width: 168px;
-    border: none;
-}
-.sub-menu li:hover > a,
-.sub-menu ul ul ul *:hover > a,
-.sub-menu a:focus {
-    background: url(images/nav-dashed.png) repeat-x left 24px #464547;
-}
-.sub-menu li:hover > a,
-.sub-menu a:focus {
-    background: url(images/nav-dashed.png) repeat-x left 24px #464547;
-    color: #FFFFEB;
-}
-.main-navigation ul ul li:hover > ul {
-    display: block;
-}
-.sub-menu .current-menu-item > a,
-.sub-menu .current-menu-ancestor > a,
-.sub-menu .current_page_item > a,
-.sub-menu .current_page_ancestor > a {
-    background: url(images/nav-dashed.png) repeat-x left 24px #464547;
-}
+	  	display: none;
+	  	float: left;
+	  	left: 0;
+	  	margin: 0;
+	  	position: absolute;
+	  	top: 1.8em;
+	  	width: 188px;
+	  	z-index: 99999;
+	  	border: 0;
+	  }
+	  .main-navigation ul ul ul ul {
+	  	left: 100%;
+	  	top: 0;
+	  }
 
-/**** test ****/
+	  .main-navigation ul ul ul li {
+	  	width: 168px;
+	  	background: none repeat scroll 0 0 #464547;
+	  }
+	  .main-navigation ul ul ul a {
+
+	  	color: #FFFFEB;
+	  	font-size: 13px;
+	  	font-weight: normal;
+	  	height: auto;
+	  	line-height: 1.4em;
+	  	padding: 10px 0;
+	  	/*padding: 10px;*/
+	  /*	width: 168px;*/
+	  	border: none;
+	  }
+	  .sub-menu li:hover > a,
+	  .sub-menu ul ul ul *:hover > a,
+	  .sub-menu a:focus {
+	  	background: url(images/nav-dashed.png) repeat-x left 29px transparent;
+	  }
+	  .sub-menu li:hover > a,
+	  .sub-menu a:focus {
+	  	background: url(images/nav-dashed.png) repeat-x left 29px transparent;
+	  }
+	  .main-navigation ul ul li:hover > ul {
+	  	display: block;
+	  }
+	  .sub-menu .current-menu-item > a,
+	  .sub-menu .current-menu-ancestor > a,
+	  .sub-menu .current_page_item > a,
+	  .sub-menu .current_page_ancestor > a {
+	  	background: url(images/nav-dashed.png) repeat-x left 29px transparent;
+	  }
+
+	  /**** test ****/
 
 
 	  /**** Main *****/
@@ -948,6 +958,10 @@ body.home {
    	padding-top: 10px;
    }
 
+   #secondary .fsFieldFocused {
+   	background-color: transparent;
+   }
+
 
    /***** Modify Plugins *****/
 
@@ -991,116 +1005,123 @@ body.home {
    #contact_home_btn,
    #codecision_btn,
    #performancesandfestival_btn {
-/*	border: 2px solid black;
-background: #EEE;*/
-width: 13em;
-margin: 0 auto;
-text-align: center;
-display: block;
-text-decoration: none;
-font-family: 'Book Antiqua','TimesNewRoman',serif;
-text-transform: uppercase;
-letter-spacing: 0.06em;
-}
+		/*	border: 2px solid black;
+		background: #EEE;*/
+		width: 13em;
+		margin: 0 auto;
+		text-align: center;
+		display: block;
+		text-decoration: none;
+		font-family: 'Book Antiqua','TimesNewRoman',serif;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
 
-a#createown_btn,
-a#contact_home_btn,
-a#codecision_btn,
-a#performancesandfestival_btn {
-	color: #3B3B3B;
-}
+	a#createown_btn,
+	a#contact_home_btn,
+	a#codecision_btn,
+	a#performancesandfestival_btn {
+		color: #3B3B3B;
+	}
 
-#createown_btn {
-	background: url('images/sidebarbackground1.png') no-repeat;
-	width: 220px;
-	height: 63px;
-	padding: 1.2em 0;
-}
+	#createown_btn {
+		background: url('images/sidebarbackground1.png') no-repeat;
+		width: 220px;
+		height: 63px;
+		padding: 1.2em 0;
+	}
 
-#secondary #createown_btn {
-	position: relative;
-	top: -10em;
-}
+	#secondary #createown_btn {
+		position: relative;
+		top: -10em;
+	}
 
-#performancesandfestival_btn {
-	background: url('images/sidebarbackground2.png') no-repeat;
-	width: 220px;
-	height: 180px;
-	padding: 1.2em 0;
-	position: relative;
-	top: -10em;
-}
+	#performancesandfestival_btn {
+		background: url('images/sidebarbackground2.png') no-repeat;
+		width: 220px;
+		height: 180px;
+		padding: 1.2em 0;
+		position: relative;
+		top: -10em;
+	}
 
-#include_post-3 {
-	height: 350px;
+	#include_post-3 {
+		height: 350px;
 
-}
+	}
 
-#twtr-widget-1 {
-	background: url('images/twitter.png') no-repeat;
-	width: 631px;
-	height: 240px;
-}
+	#twtr-widget-1 {
+		background: url('images/twitter.png') no-repeat;
+		width: 631px;
+    height: 410px;
+	}
 
-.twtr-doc {
-	margin: 1em;
-	width: 197px !important;
-}
+	.twtr-doc {
+		margin: 1em;
+		width: 197px !important;
+	}
 
-/**** Content *****/
+	/**** Content *****/
 
 
 
-/**** Festival Page *****/
+	/**** Festival Page *****/
 
-.entry-content .tablepress thead th,
-.entry-content .tablepress tfoot th {
-	background: #79BDBE;
-}
+	/* Tablepress */
 
-.entry-content .tablepress .row-hover tr:hover td {
-	background: #efec8f;//  #E2ED8F;
-}
+	.entry-content .tablepress {
+		border-bottom: #A6A6A6 thin solid;
+		margin-bottom: 3em;
+	}
 
-.entry-content .tablepress a {
-	color: #404040;
-	text-decoration: none;
-}
+	.entry-content .tablepress thead th,
+	.entry-content .tablepress tfoot th {
+		background: #79BDBE;
+	}
 
-.festival_performer {
-	padding-top: 2em;
-}
+	.entry-content .tablepress .row-hover tr:hover td {
+		background: #efec8f;//  #E2ED8F;
+	}
 
-.festival_performer_img_container {
-	float: left;
-	width: 220px;
-}
+	.entry-content .tablepress a {
+		color: #404040;
+		text-decoration: none;
+	}
 
-/*.festival_performer_img {
-	float: left;
-	clear: both;
-	margin-right: 1.5em;
-	}*/
+	/* Custom Performance Posts */
+
+	.festival_performance {
+		padding-top: 2em;
+		border-bottom: thin solid #A6A6A6;
+	}
+
+	.festival_performance_datetime {
+		margin-bottom: 0.75em;
+	}
+
+	.festival-performer-title {
+		color: #CC114F;
+		font-size: 1.4em;
+		margin-bottom: 0.25em;
+		 margin-left: 220px;
+	}
+
+	.festival_performer_img_container {
+		float: left;
+		width: 220px;
+		 padding-top: 0.35em;
+	}
 
 	.festival_performer_bio {
 		overflow: auto;
+	   margin-bottom: 0.75em;
 	}
 
 
 
+
+
 	/**** Home Splash Page ****/
-
-/*body.home {
-	background: url(images/flathomepage.jpg) no-repeat;
-	}*/
-
-/*#container {
-	position: relative;
-	margin: 0 auto;
-	width: 1200px;
-	height: 780px;
-	display: block;
-	}*/
 
 	#logo {
 		position: absolute;

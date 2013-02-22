@@ -13,8 +13,6 @@
 
 get_header(); ?>
 
-<!-- 		<div id="background-person"></div> -->
-
 		<div id="primary" class="content-area">
 			<div id="content" class="site-content" role="main">
 
