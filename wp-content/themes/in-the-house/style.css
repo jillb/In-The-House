@@ -508,8 +508,9 @@ object {
 /****** Jill Code *******/
 
 body {
-	background: url("images/inthehouseinnerpagebackground.jpg") repeat-x fixed 0 0 #fff;
-	background-size: contain;
+	background: url("images/inthehouse_background.jpg") repeat-x fixed 0 0 #fff;
+//	background: url("images/inthehouseinnerpagebackground.jpg") repeat-x fixed 0 0 #fff;
+	background-size: cover;
 	/*	background: url('images/Our_Shows_Page.jpg') no-repeat center top;*/
 }
 
@@ -536,14 +537,14 @@ body.home {
 }
 
 
-/*#background-person {
+#background-person {
 	background: url(images/publiclady.png);
-	position: absolute;
+	position:fixed;
 	width: 93px;
 	height: 256px;
-	bottom: 60px;
-	left: -140px;
-	}*/
+	bottom: 20px;
+	left: 10px;
+}
 
 /*h1.site-title {
 	  margin-left: 4px;
@@ -850,12 +851,17 @@ body.home {
 
    }*/
 
+   #include_post-13 {
+   	margin: 0;
+   }
+
    #secondary #include_post-13 p {
    	font-family: 'Book Antiqua', 'TimesNewRoman', serif;
    	font-size: 1.2em;
    	text-decoration: none;
    	color: #404040;		
    	text-align: center;
+   	margin-bottom: 0.5em;
    }
 
 
@@ -1115,6 +1121,11 @@ body.home {
 	.festival_performer_bio {
 		overflow: auto;
 	   margin-bottom: 0.75em;
+	}
+
+	.performer_edit_link {
+		position: relative;
+		top: -1em;
 	}
 
 

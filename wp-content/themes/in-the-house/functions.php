@@ -144,9 +144,17 @@ function festivallong_func( $atts ){
 
 			$output .= '<div class="festival_performer_img_container"><img src="' . $image[url] . '" class="festival_performer_img" /></div>';
 
-			$output .= '<div class="festival_performer_bio">' . get_field('performer_bio', $performer->ID) . '</div>';
+		 	$output .= '<div class="festival_performer_bio">' . get_field('performer_bio', $performer->ID);
+
+			if (current_user_can('administrator'))
+				$output .= '<a href="' . get_edit_post_link($performer->ID) . '" class="performer_edit_link">edit performer</a>';
+
+			$output .= '</div>';
 		}
 	}
+
+	if (current_user_can('administrator'))
+		$output .= '<a href="' . get_edit_post_link() . '">edit festival show</a>';
 
 	$output .= '</div>';
 
