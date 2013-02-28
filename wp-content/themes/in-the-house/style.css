@@ -8,6 +8,19 @@ Version: 1.0
 */
 
 
+/*@font-face {
+    font-family: 'LibreBaskervilleRegular';
+    src: url('/fonts/LibreBaskerville-Regular-webfont.eot');
+    src: url('/fonts/LibreBaskerville-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/LibreBaskerville-Regular-webfont.woff') format('woff'),
+         url('/fonts/LibreBaskerville-Regular-webfont.ttf') format('truetype'),
+         url('/fonts/LibreBaskerville-Regular-webfont.svg#LibreBaskervilleRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+*/
+
+
 /* =Reset
 -------------------------------------------------------------- */
 
@@ -477,6 +490,7 @@ object {
 
 .widget {
 	margin: 0 0 1.5em;
+    line-height: 1.2em;
 }
 
 /* Make sure select elements fit in widgets */
@@ -536,6 +550,30 @@ body.home {
 	z-index: 100;
 }
 
+/*#colophon { *//* footer */
+/*
+	background: url("images/footer_background.jpg") repeat #494B4D;
+    border-bottom: 2px solid #666667;
+    border-left: 2px solid #666667;
+    border-right: 2px solid #666667;
+    float: left;
+    margin-left: 1.15em;
+    padding-top: 1em;
+    position: relative;
+    width: 984px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #EEEEDA;
+    line-height: 1em;
+}
+
+.home #colophon {
+	width: 100%;
+}
+
+.home #page {
+	height: 828px;
+} */
 
 #background-person {
 	background: url(images/publiclady.png);
@@ -557,6 +595,13 @@ body.home {
 	  	overflow: hidden;
 	  	text-indent: 100%;
 	  	white-space: nowrap;
+	  	z-index: 100;
+	  	position: relative;
+	  }
+
+	  h1.site-title a:hover {
+	  	top: 1px;
+	  	left: 1px;
 	  }
 	  h2.site-description {
 	  	display: none;
@@ -593,6 +638,8 @@ body.home {
 	  }
 
 
+
+
 	  /*** navigation ***/
 
 
@@ -624,8 +671,8 @@ body.home {
 	  	display: block;
 	  	text-decoration: none;
 	  	color: #f4f0e0;
-	  	font-family: 'Book Antiqua', 'TimesNewRoman', serif;
-	  }
+	/*  	font-family: 'Book Antiqua', 'TimesNewRoman', serif;
+*/	  }
 	  .main-navigation ul ul {
 	  	/*	float: left;*/
 	  	position: absolute;
@@ -729,7 +776,19 @@ body.home {
 	  	background: url(images/nav-dashed.png) repeat-x left 29px transparent;
 	  }
 
-	  /**** test ****/
+/*	  #menu-item-495 {
+	  	border: thin solid red;
+	  	background: url(images/yourshows.png) no-repeat;
+	  	height: 76px;
+	  	width: 202px;
+	  }
+
+	  #menu-item-494 {
+	  	border: thin solid purple;
+	  	background: url(images/pastshows.png) no-repeat;
+	  	height: 76px;
+	  	width: 202px;
+	  }*/
 
 
 	  /**** Main *****/
@@ -743,13 +802,14 @@ body.home {
 	  	margin-top: -1em;
 	  	padding: 2em;
 	  	width: 920px;
-	  	position: absolute;
+	  	float: left;
+	  	position: relative;
 	  }
 
 	  /**** Primary ****/
 
 	  #primary {
-	  	width: 600px;
+	  	width: 705px;
 	  	float: left;
 	  }
 
@@ -759,9 +819,10 @@ body.home {
 	  #secondary {
 	  	width: 240px;
 	  	float: right;
+  	    margin-right: -2.6em;
 	  	/*    margin-right: 3.8em;*/
-	  	font-family: 'Book Antiqua', 'TimesNewRoman', serif;
-	  }
+	 /* 	font-family: 'Book Antiqua', 'TimesNewRoman', serif;
+	*/  }
 
 	  /*#secondary #include_post-7 {*/
 	  	/*	background: url("images/sidebarbackground3.png") no-repeat;*/
@@ -795,16 +856,32 @@ body.home {
 #secondary #include_post-10,
 #secondary #include_post-12 {*/
 
+	.sidebar-notpaper-fancyfont {
+		color: #404040;
+	 /*   font-family: 'Book Antiqua','TimesNewRoman',serif;
+	*/    font-size: 1.2em;
+	    margin-bottom: 0.5em;
+	    text-align: center;
+	    text-decoration: none;
+	    position: relative;
+	    z-index: 100;
+	}
+
+	.sidebar-notpaper-fancyfont p {
+/*		font-family: 'Book Antiqua','TimesNewRoman',serif;*/
+		margin-bottom: 0;	   
+	}
+
 	.sidebar-paper-uppercase {
 		width: 160px;
 		text-align: center;
 		/*	line-height: 63px;*/
 		text-transform: uppercase;
 
-		-moz-border-image:    url("images/sidebarpaperforborders.jpg") 30 30 stretch repeat;
-		-webkit-border-image: url("images/sidebarpaperforborders.jpg") 30 30 stretch repeat;
-		-o-border-image:      url("images/sidebarpaperforborders.jpg") 30 30 stretch repeat;
-		border-image:         url("images/sidebarpaperforborders.jpg") 30 30 stretch repeat;
+		-moz-border-image:    url("images/sidebarpaperforborders.jpg") 30 30 stretch;
+		-webkit-border-image: url("images/sidebarpaperforborders.jpg") 30 30 stretch;
+		-o-border-image:      url("images/sidebarpaperforborders.jpg") 30 30 stretch;
+		border-image:         url("images/sidebarpaperforborders.jpg") 30 30 stretch;
 
 		border-width: 30px;
 
@@ -813,17 +890,20 @@ body.home {
 
 		background: url('images/sidebarpaperbackground2.jpg');
 		background-size: 100% 100%;
+			    position: relative;
+	    z-index: 100;
 	}
 
-	.sidebar-paper-normalcase {
+	.sidebar-paper-normalcase,
+	.sidebar-newsletter {
 		width: 160px;
 		text-align: center;
 		/*	line-height: 63px;*/
 
-		-moz-border-image:    url("images/sidebarpaperforborders.jpg") 30 30 stretch repeat;
-		-webkit-border-image: url("images/sidebarpaperforborders.jpg") 30 30 stretch repeat;
-		-o-border-image:      url("images/sidebarpaperforborders.jpg") 30 30 stretch repeat;
-		border-image:         url("images/sidebarpaperforborders.jpg") 30 30 stretch repeat;
+		-moz-border-image:    url("images/sidebarpaperforborders.jpg") 30 30 stretch;
+		-webkit-border-image: url("images/sidebarpaperforborders.jpg") 30 30 stretch;
+		-o-border-image:      url("images/sidebarpaperforborders.jpg") 30 30 stretch;
+		border-image:         url("images/sidebarpaperforborders.jpg") 30 30 stretch;
 
 		border-width: 30px;
 
@@ -832,11 +912,73 @@ body.home {
 
 		background: url('images/sidebarpaperbackground2.jpg');
 		background-size:  100% 100%;
+			    position: relative;
+	    z-index: 100;
 	}
 
-	#include_post-6 {
+	.sidebar-paper-normalcase2 {
+		width: 191px;
+		text-align: center;
+		/*	line-height: 63px;*/
+
+		-moz-border-image:    url("images/sidebarbackground3.jpg") 15 15 stretch;
+		-webkit-border-image: url("images/sidebarbackground3.jpg") 15 15 stretch;
+		-o-border-image:      url("images/sidebarbackground3.jpg") 15 15 stretch;
+		border-image:         url("images/sidebarbackground3.jpg") 15 15 stretch;
+
+		border-width: 15px;
+
+		border-color: #514E45;
+		border-style: solid;
+
+		background: url('images/sidebarpaperbackground3.jpg');
+		background-size:  100% 100%;
+		position: relative;
+	    z-index: 100;
+	}
+
+	.sidebar-paper-normalcase3 {
+		width: 181px;
+		text-align: center;
+		/*	line-height: 63px;*/
+
+		-moz-border-image:    url("images/sidebarpaperforborders3.jpg") 20 20 stretch;
+		-webkit-border-image: url("images/sidebarpaperforborders3.jpg") 20 20 stretch;
+		-o-border-image:      url("images/sidebarpaperforborders3.jpg") 20 20 stretch;
+		border-image:         url("images/sidebarpaperforborders3.jpg") 20 20 stretch;
+
+		border-width: 20px;
+
+		border-color: #514E45;
+		border-style: solid;
+
+		background: url('images/sidebarpaperbackground2.jpg');
+		background-size:  100% 100%;
+		position: relative;
+	    z-index: 100;
+	}
+
+	.sidebar-twitter {
+		height: 350px;
+		position: relative;
+		z-index: 1;
+
+	}
+
+	.sidebar-paper-uppercase h1,
+	.sidebar-paper-normalcase h1,
+	.sidebar-notpaper-fancyfont h1,
+	.sidebar-twitter h1 {
+		display: none;
+	}
+
+	.sidebar-newsletter {
 		height: 200px;
 		text-align: left;
+	}
+
+	.sidebar-newsletter h1 {
+/*		font-family: 'Book Antiqua','TimesNewRoman',serif;*/
 	}
 
 /*#include_post-3,
@@ -856,8 +998,8 @@ body.home {
    }
 
    #secondary #include_post-13 p {
-   	font-family: 'Book Antiqua', 'TimesNewRoman', serif;
-   	font-size: 1.2em;
+  /* 	font-family: 'Book Antiqua', 'TimesNewRoman', serif;
+ */  	font-size: 1.2em;
    	text-decoration: none;
    	color: #404040;		
    	text-align: center;
@@ -866,14 +1008,16 @@ body.home {
 
 
    .sidebar-paper-uppercase p,
-   .sidebar-paper-normalcase p {
+   .sidebar-paper-normalcase p,
+   .sidebar-newsletter p {
    	margin: 0;
    }
 
    .sidebar-paper-uppercase a,
-   .sidebar-paper-normalcase a {
-   	font-family: 'Book Antiqua', 'TimesNewRoman', serif;
-   	font-size: 1.2em;
+   .sidebar-paper-normalcase a,
+   .sidebar-newsletter a {
+ /*  	font-family: 'Book Antiqua', 'TimesNewRoman', serif;
+*/   	font-size: 1.2em;
    	text-decoration: none;
    	color: #404040;	
    }
@@ -884,7 +1028,8 @@ body.home {
 
    .addthis_toolbox {
    	float: right;
-   	width: 11em;
+/*   	width: 11em;*/
+   	margin-top: 1em;
    }
 
 
@@ -899,9 +1044,13 @@ body.home {
    	z-index: 200;
    }
 
+   .error404 #searchform {
+   	margin-bottom: 2em;
+   }
+
    #s {
    	background: url('images/searchbar.png') no-repeat;
-   	width: 216px;
+   	width: 190px;
    	height: 22px;
    	border: none;
    	position: absolute;
@@ -918,7 +1067,7 @@ body.home {
    	border: none;
    	box-shadow: none;
    	position: absolute;
-   	right: 0;
+   	left: 189px;
    }
 
 
@@ -934,7 +1083,7 @@ body.home {
    /***** Newsletter *****/
 
 
-   #include_post-6 a {
+   .sidebar-newsletter a {
    	display: none;
    }
 
@@ -1018,7 +1167,7 @@ body.home {
 		text-align: center;
 		display: block;
 		text-decoration: none;
-		font-family: 'Book Antiqua','TimesNewRoman',serif;
+/*		font-family: 'Book Antiqua','TimesNewRoman',serif;*/
 		text-transform: uppercase;
 		letter-spacing: 0.06em;
 	}
@@ -1051,15 +1200,14 @@ body.home {
 		top: -10em;
 	}
 
-	#include_post-3 {
-		height: 350px;
-
-	}
-
 	#twtr-widget-1 {
 		background: url('images/twitter.png') no-repeat;
-		width: 631px;
-    height: 410px;
+		width: 581px;
+	    height: 350px;
+	}
+
+	#twtr-widget-1 .twtr-tweet a {
+    	color: #047ABD !important;
 	}
 
 	.twtr-doc {
@@ -1078,6 +1226,8 @@ body.home {
 	.entry-content .tablepress {
 		border-bottom: #A6A6A6 thin solid;
 		margin-bottom: 3em;
+		font-size: 0.8em;
+		width: 100%;
 	}
 
 	.entry-content .tablepress thead th,
@@ -1085,13 +1235,22 @@ body.home {
 		background: #79BDBE;
 	}
 
-	.entry-content .tablepress .row-hover tr:hover td {
+/*	.entry-content .tablepress .row-hover tr:hover td {
 		background: #efec8f;//  #E2ED8F;
+	}*/
+
+	.entry-content .tablepress td {
+		border-left: #D4D4D4 thin solid;
 	}
 
 	.entry-content .tablepress a {
 		color: #404040;
 		text-decoration: none;
+	}
+
+	.entry-content .tablepress a:hover {
+		color: #044468;
+		text-decoration: underline;
 	}
 
 	/* Custom Performance Posts */
@@ -1107,25 +1266,43 @@ body.home {
 
 	.festival-performer-title {
 		color: #CC114F;
-		font-size: 1.4em;
+		font-size: 1.2em;
 		margin-bottom: 0.25em;
 		 margin-left: 220px;
+		 clear: both;
 	}
 
 	.festival_performer_img_container {
 		float: left;
 		width: 220px;
-		 padding-top: 0.35em;
+    	padding-top: 0.2em;
+	}
+
+	.festival_performer_img_container .festival_performer_img {
+		float: right;
+		margin-right: 1.5em;
 	}
 
 	.festival_performer_bio {
 		overflow: auto;
 	   margin-bottom: 0.75em;
+	   font-size: 0.85em;
+	   line-height: 1.2em;
+	}
+
+	.festival_performer_bio p {
+		margin-bottom: 0;
+	}
+
+	.artists_site {
+		margin-top: 0.5em;
+		display: block;
 	}
 
 	.performer_edit_link {
-		position: relative;
-		top: -1em;
+		clear: both;
+    	display: block;
+    	margin-top: 1em;
 	}
 
 
@@ -1134,19 +1311,31 @@ body.home {
 
 	/**** Home Splash Page ****/
 
-	#logo {
+
+	#home-logo {
 		position: absolute;
 		background: url(images/ITH_homepage_logo.png) no-repeat;
-		width:357px;
-		height:366px;
-		top: -41px;
+		width: 259px;
+		height: 169px;
 
 		left: 63px; //-110px;
 		cursor: pointer;
+
+		color: #f9f7eb;
+		text-decoration: none;
+		font-size: 1.15em;
+		padding: 8.5em 2.5em 0 3em;
+/*		font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;*/
+    
 	}
 
-	#logo:hover {
-		top: -39px;
+	#home-logo p {
+/*		font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;*/
+		margin-bottom: 0;
+	}
+
+	#home-logo:hover {
+		top: 1px;
 		left: 65px; //-110px;
 	}
 
@@ -1187,27 +1376,89 @@ body.home {
 		cursor: pointer;
 	}
 
-	#post {
+	#post_menu {
 		position: absolute;
-		background: url(images/post.png) no-repeat;
-		width: 201px;
+		width: 184px;
 		height: 344px;
-		left: 944px; //771px;
+		left: 1017px; //771px;
 		top: 381px;
 		cursor: pointer;
 	}
 
-	#sign-ourshows {
-		background: url(images/ourshows-sign.png) no-repeat;
+	#post {
+		position: absolute;
+		background: url(images/splash_post.png) no-repeat;
+		width: 31px;
+		height: 344px;
+	}
+
+	#post_menu .menu-main-menu-container {
+	    left: -104px;
+	    position: absolute;
+	    top: 40px;
+	}
+
+	#post_menu .menu-main-menu-container a {
+		text-decoration: none;
+		color: black;
+		text-transform: uppercase;
+/*		font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;*/
+	    font-size: 1.3em;
+	    font-weight: 600;
+	}
+
+	#post_menu .menu-main-menu-container #menu-item-36 {
+		background: url(images/signpost1.png) no-repeat;
 		position: absolute;
 		width: 184px;
 		height: 41px;
-		left: 960px;
-		top: 421px;
 		cursor: pointer;
+		list-style-type: none;
 	}
 
-	#sign-ourshows:hover {
-		left: 962px;
-		top: 423px;
+	#post_menu .menu-main-menu-container #menu-item-36 a {
+	    left: 24px;
+	    position: absolute;
+	    top: 3px;
+	    transform: rotate(1deg);
+		-ms-transform: rotate(1deg); /* IE 9 */
+		-webkit-transform: rotate(1deg); /* Safari and Chrome */
+		-o-transform: rotate(1deg); /* Opera */
+		-moz-transform: rotate(1deg); /* Firefox */
+
+	}
+
+	#post_menu .menu-main-menu-container #menu-item-36:hover {
+/*		left: 962px;
+		top: 423px;*/
+		transform: rotate(-10deg);
+		-ms-transform: rotate(-10deg); /* IE 9 */
+		-webkit-transform: rotate(-10deg); /* Safari and Chrome */
+		-o-transform: rotate(-10deg); /* Opera */
+		-moz-transform: rotate(-10deg); /* Firefox */
+	}
+
+/*	.home .addthis_toolbox {
+		margin-top: 1em;
+	}*/
+
+	.home .addthis_toolbox #home-logo {
+		display: none;
+	}
+
+
+	/***** 404 ******/
+
+	#page #man404 {
+	    background: url("images/man-left.png") no-repeat;
+	    float: right;
+	    height: 408px;
+	    margin-right: -14em;
+	    width: 288px;
+	}
+
+	/***** Thank you page ******/
+
+	.page-id-132 .addthis_toolbox {
+		display: none;
 	}

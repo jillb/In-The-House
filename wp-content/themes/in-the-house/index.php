@@ -14,15 +14,30 @@
 
 get_header(); ?>
 
-<a id="logo"></a>
+<a id="home-logo" href="our-shows">
+
+<?php
+
+$post_id_home = get_post(466);
+$content = $post_id_home->post_content;
+$content = apply_filters('the_content', $content);
+$content = str_replace(']]>', ']]>', $content);
+echo $content;
+
+?>
+
+</a>
 
 <div id="womanleft"></div>
 <div id="manleft"></div>
 <div id="womanmiddle"></div>
 <div id="manright"></div>
 
-<div id="post"></div>
-<a id="sign-ourshows"></a>
+<div id="post_menu">
+	<div id="post"></div>
+	<?php wp_nav_menu( array('depth' => 1 ));  ?>
+ 	<a id="sign-ourshows" href="our-shows"></a>
+</div>
 
 
 <?php get_footer(); ?>

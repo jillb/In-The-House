@@ -14,12 +14,15 @@
 	<?php } ?>
 
 	<footer id="colophon" class="site-footer" role="contentinfo">
-<!-- 		<div class="site-info">
+ 		<!-- <div class="site-info">
 			<?php do_action( 'in_the_house_credits' ); ?>
 			<a href="http://wordpress.org/" title="<?php esc_attr_e( 'A Semantic Personal Publishing Platform', 'in_the_house' ); ?>" rel="generator"><?php printf( __( 'Proudly powered by %s', 'in_the_house' ), 'WordPress' ); ?></a>
 			<span class="sep"> | </span>
 			<?php printf( __( 'Theme: %1$s by %2$s.', 'in_the_house' ), 'in_the_house', '<a href="http://automattic.com/" rel="designer">Automattic</a>' ); ?>
 		</div> --><!-- .site-info -->
+
+		<?php /* Widgetized footer */
+		   /* if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('footer-1') ) : */?><?php /*endif;*/ ?>
  	</footer><!-- #colophon .site-footer -->
 </div><!-- #page .hfeed .site -->
 

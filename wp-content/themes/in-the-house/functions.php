@@ -64,7 +64,7 @@ function in_the_house_setup() {
 	 */
 	register_nav_menus( array(
 		'primary' => __( 'Primary Menu', 'in_the_house' ),
-	) );
+		) );
 
 	/**
 	 * Add support for the Aside Post Formats
@@ -87,7 +87,16 @@ function in_the_house_widgets_init() {
 		'after_widget' => '</aside>',
 		'before_title' => '<h1 class="widget-title">',
 		'after_title' => '</h1>',
-	) );
+		) );
+
+	register_sidebar( array(
+		'name' => __( 'Footer', 'in_the_house' ),
+		'id' => 'footer-1',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget' => '</aside>',
+		'before_title' => '<h1 class="widget-title">',
+		'after_title' => '</h1>',
+		) );
 }
 add_action( 'widgets_init', 'in_the_house_widgets_init' );
 
@@ -132,6 +141,9 @@ function festivallong_func( $atts ){
 	while ( have_posts() ) : the_post();
 	$output .= '<div id="' . str_replace(' ', '', get_field('title')) . '" class="festival_performance"><h3>' . get_field('title') . '</h3>';
 	$output .= '<p class="festival_performance_datetime">' . get_field('date_and_time') . '</p>';
+	if (get_field('festival_venue')) {
+		$output .= "HEY!";
+	}
 	$output .= '<p>' . get_field('description') . '</p>';
 	?>
 	<?php
@@ -144,16 +156,18 @@ function festivallong_func( $atts ){
 
 			$output .= '<div class="festival_performer_img_container"><img src="' . $image[url] . '" class="festival_performer_img" /></div>';
 
-		 	$output .= '<div class="festival_performer_bio">' . get_field('performer_bio', $performer->ID);
+			$output .= '<div class="festival_performer_bio">' . get_field('performer_bio', $performer->ID);
 
-			if (current_user_can('administrator'))
+			$output .= '<a href="' . get_field('artists_website', $performer->ID) . '" target="_blank" class="artists_site">' . get_field('artists_website', $performer->ID) . '</a>';
+
+			if (current_user_can('edit_others_posts'))
 				$output .= '<a href="' . get_edit_post_link($performer->ID) . '" class="performer_edit_link">edit performer</a>';
 
 			$output .= '</div>';
 		}
 	}
 
-	if (current_user_can('administrator'))
+	if (current_user_can('edit_others_posts'))
 		$output .= '<a href="' . get_edit_post_link() . '">edit festival show</a>';
 
 	$output .= '</div>';
@@ -175,7 +189,58 @@ add_shortcode( 'festival-long', 'festivallong_func' );
  ***/
 
 if(function_exists('register_field')) {
-     register_field('acf_time_picker', dirname(__File__) . '/acf_time_picker/acf_time_picker.php');
-   }
+	register_field('acf_time_picker', dirname(__File__) . '/acf_time_picker/acf_time_picker.php');
+}
+
+
+/***
+ * Change admin menu for less than Admin
+ ***/
+
+function change_admin_menus() {
+
+	global $menu;
+
+	global $current_user;
+
+	$role_object = get_role( 'editor' );
+	$role_object->add_cap( 'edit_theme_options' );
+
+	if ( ! current_user_can( 'update_themes' ) ) {
+		remove_menu_page( 'edit.php' ); // Posts
+		remove_menu_page( 'link-manager.php' ); // Links	
+		remove_menu_page( 'tools.php' ); // Tools
+
+	}
+
+}
+
+add_action('admin_menu', 'change_admin_menus', 11);
+
+
+function rem_dashboard_widgets() {
+    // Globalize the metaboxes array, this holds all the widgets for wp-admin
+
+  global $wp_meta_boxes;
+
+  // Remove most boxes from the admin dashboard to clean it up
+
+  unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
+  unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);
+  unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
+  unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
+
+  remove_meta_box('rg_forms_dashboard', 'dashboard', 'norma;');
+
+} 
+
+add_action('wp_dashboard_setup', 'rem_dashboard_widgets' );
+
+
+add_theme_support( 'post-thumbnails' );
+
+add_image_size( 'sidebar-thumb', 120, 120, true ); // Hard Crop Mode
+add_image_size( 'homepage-thumb', 220, 180 ); // Soft Crop Mode
+add_image_size( 'singlepost-thumb', 590, 9999 ); // Unlimited Height Mode
 
 ?>
