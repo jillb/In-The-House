@@ -124,7 +124,6 @@ add_action( 'wp_enqueue_scripts', 'in_the_house_scripts' );
 require( get_template_directory() . '/inc/custom-header.php' );
 
 
-
 /***
  * Create a shortcode to display the festival info
  */
@@ -141,21 +140,29 @@ function festivallong_func( $atts ){
 	while ( have_posts() ) : the_post();
 	$output .= '<div id="' . str_replace(' ', '', get_field('title')) . '" class="festival_performance"><h3>' . get_field('title') . '</h3>';
 	$output .= '<p class="festival_performance_datetime">' . get_field('date_and_time') . '</p>';
-	if (get_field('festival_venue')) {
-		$output .= "HEY!";
-	}
+
 	$output .= '<p>' . get_field('description') . '</p>';
-	?>
-	<?php
+
 	if (get_field('performers')) {
 		foreach(get_field('performers') as $performer) {
 
-			$image = get_field('performer_image1', $performer->ID);
+/*			$image = get_field('performer_image1', $performer->ID);*/
+
+/*			$output .= '<div class="festival_performer_img_container"><img src="' . $image[url] . '" class="festival_performer_img" /></div>';*/
+
+			$img_attachment_id = get_field('performer_image1', $performer->ID); // attaching the value of the extra_image field to a variable - we may want to call it multiple times
+			$size = "full"; 
+			$this_image = wp_get_attachment_image_src( $img_attachment_id, $size );
+			$width = $this_image[1];
+			$height = $this_image[2];
+
+			if ($width < $height)
+				$output .= '<div class="festival_performer_img_container">' . wp_get_attachment_image( $img_attachment_id, Performer_portrait_150w) . '</div>';  // output the image
+			else
+				$output .= '<div class="festival_performer_img_container">' . wp_get_attachment_image( $img_attachment_id, Performer_landscape_200w) . '</div>';
+
 
 			$output .= '<p class="festival-performer-title">' . get_the_title($performer->ID) . '</p>';
-
-			$output .= '<div class="festival_performer_img_container"><img src="' . $image[url] . '" class="festival_performer_img" /></div>';
-
 			$output .= '<div class="festival_performer_bio">' . get_field('performer_bio', $performer->ID);
 
 			$output .= '<a href="' . get_field('artists_website', $performer->ID) . '" target="_blank" class="artists_site">' . get_field('artists_website', $performer->ID) . '</a>';
@@ -235,12 +242,5 @@ function rem_dashboard_widgets() {
 } 
 
 add_action('wp_dashboard_setup', 'rem_dashboard_widgets' );
-
-
-add_theme_support( 'post-thumbnails' );
-
-add_image_size( 'sidebar-thumb', 120, 120, true ); // Hard Crop Mode
-add_image_size( 'homepage-thumb', 220, 180 ); // Soft Crop Mode
-add_image_size( 'singlepost-thumb', 590, 9999 ); // Unlimited Height Mode
 
 ?>

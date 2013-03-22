@@ -14,30 +14,39 @@
 
 get_header(); ?>
 
-<a id="home-logo" href="our-shows">
+<div id="homemain">
 
-<?php
+	<a id="home-logo" href="our-shows">
 
-$post_id_home = get_post(466);
-$content = $post_id_home->post_content;
-$content = apply_filters('the_content', $content);
-$content = str_replace(']]>', ']]>', $content);
-echo $content;
+		<img src="<?php bloginfo('url') ?>/wp-content/uploads/2013/03/logo.png" />
 
-?>
+		<?php
 
-</a>
+		$post_id_home = get_post(466);
+		$content = $post_id_home->post_content;
+		$content = apply_filters('the_content', $content);
+		$content = str_replace(']]>', ']]>', $content);
+		echo $content;
 
-<div id="womanleft"></div>
-<div id="manleft"></div>
-<div id="womanmiddle"></div>
-<div id="manright"></div>
+		?>
 
-<div id="post_menu">
-	<div id="post"></div>
-	<?php wp_nav_menu( array('depth' => 1 ));  ?>
- 	<a id="sign-ourshows" href="our-shows"></a>
+	</a>
+
+	<div id="womanleft"></div>
+	<div id="manleft"></div>
+	<div id="womanmiddle"></div>
+	<div id="manright"></div>
+
+	<div id="post_menu">
+		<div id="post"></div>
+		<?php wp_nav_menu( array('depth' => 1 ));  ?>
+		<a id="sign-ourshows" href="our-shows"></a>
+		<a id="sign-yourshows" href="your-shows"></a>
+		<a id="sign-pastshows" href="past-shows"></a>
+	</div>
+
+	<?php get_footer(); ?>
+
 </div>
 
 
-<?php get_footer(); ?>

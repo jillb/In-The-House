@@ -22,7 +22,7 @@
 		</div> --><!-- .site-info -->
 
 		<?php /* Widgetized footer */
-		   /* if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('footer-1') ) : */?><?php /*endif;*/ ?>
+		    if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('footer-1') ) : ?><?php endif; ?>
  	</footer><!-- #colophon .site-footer -->
 </div><!-- #page .hfeed .site -->
 
