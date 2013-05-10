@@ -1,0 +1,8 @@
+/* Social Web Links CSS */
+
+.swl_inline { position: relative; overflow: visible; vertical-align: top; display: inline-block; outline: none; zoom: 1; *display: inline; min_height: 1px; _height: 1px; }
+.swl_inline img { border: 0 none; }
+.swl_horizontal { margin: 0 2px 8px 2px; }
+.swl_one_col_name { text-decoration: none; }
+.swl_two_col_noname, .swl_two_col_name { width: 47%; margin: 0 1% 8px 1%; }
+.swl_one_col_name img, .swl_two_col_name img { vertical-align: middle; margin-right: 10px; }

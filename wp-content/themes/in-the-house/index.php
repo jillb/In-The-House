@@ -15,8 +15,9 @@
 get_header(); ?>
 
 <div id="homemain">
+	<!-- 	<a href="our-shows" id="lala"></a> -->
 
-	<a id="home-logo" href="our-shows">
+<!--  	<a id="home-logo" href="our-shows">
 
 		<img src="<?php bloginfo('url') ?>/wp-content/uploads/2013/03/logo.png" />
 
@@ -29,13 +30,55 @@ get_header(); ?>
 		echo $content;
 
 		?>
+ 
+	</a> -->
 
-	</a>
+	<div id="home-logo">
 
-	<div id="womanleft"></div>
-	<div id="manleft"></div>
-	<div id="womanmiddle"></div>
-	<div id="manright"></div>
+		<a id="insideframe" href="our-shows">
+
+			<p class="read-more"></p>
+
+			<!-- 		<img src="<?php bloginfo('url') ?>/wp-content/uploads/2013/03/logo.png" /> -->
+
+			<?php
+
+			$post_id_home = get_post(466);
+			$content = $post_id_home->post_content;
+			$content = apply_filters('the_content', $content);
+			$content = str_replace(']]>', ']]>', $content);
+
+			echo $content;
+
+			?>
+		</a>
+
+	</div>
+
+	<!--	<div id="womanleft"></div> -->
+<!-- 	<div id="nextshowplane"></div>
+	<div tabindex="-1" class="slideDown"> -->
+
+<div id="nextshowplane" tabindex="-1" class="slideDown">
+		<div id="slideContent">
+
+		<?php
+
+			$post_id_feature = get_post(570);  /* 2644); */
+			$feature = $post_id_feature->post_content;
+			$feature = apply_filters('the_content', $feature);
+			$feature = str_replace(']]>', ']]>', $feature);
+
+			echo $feature;
+
+			?>
+
+		</div>
+	</div>
+	<div id="unicycle" class="homeperson"></div>
+	<div id="manleft" class="homeperson"></div>
+	<div id="womanmiddle" class="homeperson"></div>
+	<div id="internationalright" class="homeperson"></div>
 
 	<div id="post_menu">
 		<div id="post"></div>

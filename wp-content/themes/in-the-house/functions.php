@@ -115,6 +115,8 @@ function in_the_house_scripts() {
 	if ( is_singular() && wp_attachment_is_image() ) {
 		wp_enqueue_script( 'keyboard-image-navigation', get_template_directory_uri() . '/js/keyboard-image-navigation.js', array( 'jquery' ), '20120202' );
 	}
+
+	/*	wp_enqueue_script('rooftops', get_template_directory_uri() . '/js/rooftops.js', false, null);*/
 }
 add_action( 'wp_enqueue_scripts', 'in_the_house_scripts' );
 
@@ -131,59 +133,104 @@ require( get_template_directory() . '/inc/custom-header.php' );
 //[festival-long]
 function festivallong_func( $atts ){
 
-// The Query
-	query_posts( 'post_type=festival-event' );
-
 	$output = null;
 
-// The Loop
-	while ( have_posts() ) : the_post();
-	$output .= '<div id="' . str_replace(' ', '', get_field('title')) . '" class="festival_performance"><h3>' . get_field('title') . '</h3>';
-	$output .= '<p class="festival_performance_datetime">' . get_field('date_and_time') . '</p>';
+	$festival = new WP_Query( array('post_type' => 'festival-event') );
 
-	$output .= '<p>' . get_field('description') . '</p>';
+	if ( $festival->have_posts() ) {
+		while ( $festival->have_posts() ) {
+			$festival->the_post();
 
-	if (get_field('performers')) {
-		foreach(get_field('performers') as $performer) {
+			// title
 
-/*			$image = get_field('performer_image1', $performer->ID);*/
+			$output .= '<div id="' . str_replace(' ', '', get_field('title')) . '" class="festival_performance"><h3>' . get_field('title') . '</h3>';
 
-/*			$output .= '<div class="festival_performer_img_container"><img src="' . $image[url] . '" class="festival_performer_img" /></div>';*/
+			// date and time
 
-			$img_attachment_id = get_field('performer_image1', $performer->ID); // attaching the value of the extra_image field to a variable - we may want to call it multiple times
-			$size = "full"; 
-			$this_image = wp_get_attachment_image_src( $img_attachment_id, $size );
-			$width = $this_image[1];
-			$height = $this_image[2];
+			$output .= '<p class="festival_performance_datetime">' . get_field('date_and_time') . '</p>';
 
-			if ($width < $height)
-				$output .= '<div class="festival_performer_img_container">' . wp_get_attachment_image( $img_attachment_id, Performer_portrait_150w) . '</div>';  // output the image
-			else
-				$output .= '<div class="festival_performer_img_container">' . wp_get_attachment_image( $img_attachment_id, Performer_landscape_200w) . '</div>';
+			// venue
 
+			$thisvenue = get_field('festival-venue');
 
-			$output .= '<p class="festival-performer-title">' . get_the_title($performer->ID) . '</p>';
-			$output .= '<div class="festival_performer_bio">' . get_field('performer_bio', $performer->ID);
+			$output .= '<p class="festival_performance_venue">' . $thisvenue->post_title . '</p>';
 
-			$output .= '<a href="' . get_field('artists_website', $performer->ID) . '" target="_blank" class="artists_site">' . get_field('artists_website', $performer->ID) . '</a>';
+			// description
 
-			if (current_user_can('edit_others_posts'))
-				$output .= '<a href="' . get_edit_post_link($performer->ID) . '" class="performer_edit_link">edit performer</a>';
+			$output .= get_field('description');
 
-			$output .= '</div>';
+			// multiple performers
+
+			if (get_field('performers')) {
+				foreach(get_field('performers') as $performer) {
+
+					// performer & image divs
+
+					$output .= '<div class="festival_performer_container"><div class="festival_performer_img_container">';
+
+					// image and orientation
+
+					$img_attachment_id = get_field('performer_image1', $performer->ID); // attaching the value of the extra_image field to a variable - we may want to call it multiple times
+					$this_image = wp_get_attachment_image_src( $img_attachment_id, "Performer_landscape_200w" );
+					$width = $this_image[1];
+					$height = $this_image[2];
+
+					if ($width > $height) {
+						$output .= wp_get_attachment_image( $img_attachment_id, Performer_landscape_200w);  // output the image
+					}
+					else {
+						$output .= wp_get_attachment_image( $img_attachment_id, Performer_portrait_150w);
+						$newimage = wp_get_attachment_image_src($img_attachment_id, Performer_landscape_200w);
+						$height = $newimage[2];
+					}
+
+					// credits
+
+					$credits = get_field('photo_credits1', $performer->ID);
+
+					if ($credits) {
+						$output .= '<p class="festival_performance_imgcredits">' . $credits . '</p>';
+						$height += 10;
+					}
+
+					$output .= '</div><!-- /festival_performer_img_container -->';
+
+					// performer url
+
+					$performerurl = get_field('artists_website', $performer->ID);
+					$performerurl = (substr(strtolower($performerurl), 0, 7) == 'http://'?"":"http://").$performerurl;
+
+					// performer title
+
+					$output .= '<p class="festival-performer-title"><a href="' . $performerurl . '" target="_blank">' . get_the_title($performer->ID) . '</a></p>';
+
+					// performer bio
+
+					$output .= '<div class="festival_performer_bio" style="min-height: ' . $height . 'px">' . get_field('performer_bio', $performer->ID);
+
+					// performer url
+
+					$output .= '<a href="' . $performerurl . '" target="_blank" class="artists_site">' . $performerurl . '</a>';
+
+					// edit performer link
+
+					if (current_user_can('edit_others_posts'))
+						$output .= '<a href="' . get_edit_post_link($performer->ID) . '" class="performer_edit_link">edit performer</a>';
+
+					$output .= '</div><!-- /festival_performer_bio --> </div><!-- /festival_performer_container -->';
+				}
+			}
+
+		if (current_user_can('edit_others_posts'))
+			$output .= '<a href="' . get_edit_post_link() . '">edit festival show</a>';
+
+			$output .= '</div><!-- /.festival_performance -->';
+
 		}
+
+    	// Reset the post data
+		wp_reset_postdata();
 	}
-
-	if (current_user_can('edit_others_posts'))
-		$output .= '<a href="' . get_edit_post_link() . '">edit festival show</a>';
-
-	$output .= '</div>';
-
-	endwhile;
-
-// Reset Query
-	wp_reset_query();
-
 
 	return $output;
 }
@@ -228,16 +275,16 @@ add_action('admin_menu', 'change_admin_menus', 11);
 function rem_dashboard_widgets() {
     // Globalize the metaboxes array, this holds all the widgets for wp-admin
 
-  global $wp_meta_boxes;
+	global $wp_meta_boxes;
 
   // Remove most boxes from the admin dashboard to clean it up
 
-  unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
-  unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);
-  unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
-  unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
+	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
+	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);
+	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
+	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
 
-  remove_meta_box('rg_forms_dashboard', 'dashboard', 'norma;');
+	remove_meta_box('rg_forms_dashboard', 'dashboard', 'norma;');
 
 } 
 

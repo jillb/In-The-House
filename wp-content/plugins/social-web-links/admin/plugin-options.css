@@ -1,0 +1,35 @@
+/* Plugin Options CSS */
+
+.inline { position: relative; overflow: visible; vertical-align: top; display: inline-block; margin: 0; outline: none; zoom: 1; *display: inline; min_height: 1px; _height: 1px; }
+.settings_wrap { margin: 20px 20px 0 0; padding: 30px 20px; background: url(images/background.png) repeat; border: 1px #bbb5a8 solid; }
+.rounded { -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+.toprounded { -moz-border-radius-topleft: 3px; -webkit-border-top-left-radius: 3px; border-top-left-radius: 3px; -moz-border-radius-topright: 3px; -webkit-border-top-right-radius: 3px; border-top-right-radius: 3px; }
+.bottomrounded { -moz-border-radius-bottomleft: 3px; -webkit-border-bottom-left-radius: 3px; border-bottom-left-radius: 3px; -moz-border-radius-bottomright: 3px; -webkit-border-bottom-right-radius: 3px; border-bottom-right-radius: 3px; }
+.settings_title { font-size: 35px; color: #333; margin: 0; padding: 0; text-shadow: #e1ded9 1px 1px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px #b6aea3 solid; }
+.clear { height: 0px; line-height: 0px; display: block; clear: both; visibility: hidden; font-size: 0; }
+.settings_tab { display: block; float: left; padding: 10px; text-decoration: none; background-color: #333; color: #fff !important; font-weight: 700; text-shadow: #000 -1px -1px; margin-right: 1px; }
+.settings_tab:hover { background-color: #555; text-shadow: #222 -1px -1px; color: #fff !important; }
+.current_tab, .current_tab:hover { background-color: #fff; color: #333 !important; text-shadow: #fff 1px 1px; }
+.settings_content { background-color: #fff; padding: 20px; -moz-border-radius-topleft: 0; -webkit-border-top-left-radius: 0; border-top-left-radius: 0; }
+.settings_section { display: none; }
+.current_section { display: block; }
+.settings_form label { display: block; padding-bottom: 7px; margin-bottom: 10px; border-bottom: 1px #eee solid; color: #333; font-weight: 700; }
+.settings_form .field_meta { font-size: 11px; color: #888; margin-left: 15px; }
+.settings_form input, .settings_form textarea { font-family: Helvetica, Arial, sans-serif; }
+.settings_form input[type="text"], .settings_form textarea { padding: 8px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border: 1px #bbb solid; border-right-color: #ddd; border-bottom-color: #ddd; background-color: #f5f5f5; color: #555; font-family: Helvetica, Arial, sans-serif; font-size: 13px; width: 300px; }
+.settings_form textarea { width: 500px; }
+.settings_form select { background: #fff url(images/button_bg.png) repeat-x top left !important; border-color: #aaa; padding: 5px; height: 30px; }
+.settings_form select option { margin: 3px 0; height: 15px; }
+.settings_section p { margin-bottom: 30px; }
+.primary { text-shadow: #3c8907 -1px -1px; border-color: #3c8907 !important; background-color: #48a809 !important; margin-top: 20px; font-weight: 700; color: #fff !important; padding: 7px !important; cursor: pointer; background-image: url(images/button_bg.png); background-repeat: repeat-x; background-position: top left; font-size: 12px !important; line-height: 100% !important; }
+.primary:hover { text-shadow: #296204 -1px -1px; border-color: #296204 !important; background-color: #378206 !important; }
+.secondary { text-shadow: #fff 1px 1px; border-color: #aaa !important; background-color: #f9f9f9 !important; margin-top: 20px; font-weight: 700; color: #555 !important; padding: 7px !important; cursor: pointer; background-image: url(images/button_bg.png); background-repeat: repeat-x; background-position: top left; font-size: 12px !important; line-height: 100% !important; }
+.secondary:hover { background-color: #eee !important; }
+.settings_wrap .settings-error { margin: 0 !important; font-size: 13px !important; margin-bottom: 20px !important; text-shadow: #fff 1px 1px !important; background-color: transparent !important; border: 0 none !important; font-weight: 300 !important; padding-left: 26px !important; }
+#setting-error-settings_updated { background: url(images/success.png) no-repeat left center; color: #009700; }
+.error.settings-error { background: url(images/error.png) no-repeat left center; color: #c60000; }
+#setting-error-settings_reset_update { background: url(images/info.png) no-repeat left center; color: #ebbd07; }
+
+.social_field { width: 31%; margin: 1%; }
+.social_field input[type="text"] { width: 150px; margin-left: 5px; }
+.social_field img { vertical-align: middle; margin-right: 10px; }

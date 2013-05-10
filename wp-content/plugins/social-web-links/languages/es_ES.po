@@ -1,0 +1,155 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Social Web Links\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-10-15 14:48-0600\n"
+"PO-Revision-Date: 2012-10-15 16:48-0600\n"
+"Last-Translator: \n"
+"Language-Team: DezineAppz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+
+#: social-web-links-widget.php:6
+msgid "Display social profile icons on sidebar with this widget"
+msgstr "Mostrar iconos sociales de perfil en la barra lateral con este widget"
+
+#: social-web-links-widget.php:7
+msgid "Social Web Links"
+msgstr "Social Web Links"
+
+#: social-web-links-widget.php:55
+msgid "Title (optional):"
+msgstr "Título (opcional):"
+
+#: social-web-links-widget.php:59
+msgid "Size of icons:"
+msgstr "Tamaño de los iconos:"
+
+#: social-web-links-widget.php:67
+msgid "Display style:"
+msgstr "Visualizar estilo:"
+
+#: admin/plugin-options.php:12
+msgid "16 x 16 pixels"
+msgstr "16x16 píxeles"
+
+#: admin/plugin-options.php:13
+msgid "24 x 24 pixels"
+msgstr "24 x 24 píxeles"
+
+#: admin/plugin-options.php:14
+msgid "32 x 32 pixels"
+msgstr "32 x 32 píxeles"
+
+#: admin/plugin-options.php:15
+msgid "48 x 48 pixels"
+msgstr "48 x 48 píxeles"
+
+#: admin/plugin-options.php:22
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#: admin/plugin-options.php:23
+msgid "One Vertical Column with no names"
+msgstr "Una columna vertical sin nombres"
+
+#: admin/plugin-options.php:24
+msgid "One Vertical Column with names"
+msgstr "Una columna vertical con nombres"
+
+#: admin/plugin-options.php:25
+msgid "Two Vertical Columns with no names"
+msgstr "Dos columnas verticales con ningún nombre"
+
+#: admin/plugin-options.php:26
+msgid "Two Vertical Columns with names"
+msgstr "Dos columnas verticales con nombres"
+
+#: admin/plugin-options.php:62
+msgid "Social Web Links Settings"
+msgstr "Social Web Links Configuración"
+
+#: admin/plugin-options.php:95
+msgid "Default Social Sites"
+msgstr "Predeterminado Sitios Sociales"
+
+#: admin/plugin-options.php:96
+msgid "Custom Social Sites"
+msgstr "Custom Sitios Sociales"
+
+#: admin/plugin-options.php:97
+msgid "Additional Settings"
+msgstr "Configuración adicional"
+
+#: admin/plugin-options.php:120
+msgid "Default settings restored"
+msgstr "Los ajustes predeterminados restaurada"
+
+#: admin/plugin-options.php:143
+msgid "Enter full URL of the social site you want to display"
+msgstr "Introduzca la URL completa del sitio social que desea visualizar"
+
+#: admin/plugin-options.php:156
+msgid "Social Site Name"
+msgstr "Nombre del sitio Social"
+
+#: admin/plugin-options.php:159
+msgid "To replace a default site with this one, use the same name as the site you want to replace"
+msgstr "Para reemplazar un sitio predeterminado con éste, utilice el mismo nombre que el sitio que desea reemplazar"
+
+#: admin/plugin-options.php:161
+msgid "Social Site URL"
+msgstr "URL del sitio Social"
+
+#: admin/plugin-options.php:165
+msgid "Upload social logo"
+msgstr "Subir logo social"
+
+#: admin/plugin-options.php:168
+msgid "Upload Icon"
+msgstr "Subir Icono"
+
+#: admin/plugin-options.php:169
+msgid "Only 16x16, 24x24, 32x32 and 48x48 pixel images are allowed"
+msgstr "Sólo imágenes de 16x16, 24x24, 32x32 y 48x48 píxeles se permiten"
+
+#: admin/plugin-options.php:173
+msgid "Icon Size"
+msgstr "Icon Size"
+
+#: admin/plugin-options.php:180
+#: admin/plugin-options.php:189
+msgid "Use this setting only while showing icons in the content other than widget"
+msgstr "Utilice este ajuste sólo mientras muestra los iconos en el contenido que no sea Widget"
+
+#: admin/plugin-options.php:182
+msgid "Display Style"
+msgstr "Mostrar Style"
+
+#: admin/plugin-options.php:193
+msgid "Save Settings"
+msgstr "Guardar configuración"
+
+#: admin/plugin-options.php:196
+msgid "Reset Settings"
+msgstr "Restablecer configuración"
+
+#: admin/plugin-options.php:219
+msgid "Invalid custom name"
+msgstr "Invalid nombre personalizado"
+
+#: admin/plugin-options.php:220
+msgid "Invalid custom url"
+msgstr "Invalid URL personalizada"
+
+#: admin/plugin-options.php:221
+msgid "Invalid custom icon url"
+msgstr "URL no válida icono personalizado"
+
+#: admin/plugin-options.php:223
+msgid "Icon size has to be either 16x16, 24x24, 32x32, 48x48"
+msgstr "Tamaño del icono debe ser de 16x16, 24x24, 32x32, 48x48"
+
