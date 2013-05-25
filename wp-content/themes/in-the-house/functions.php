@@ -198,31 +198,52 @@ function festivallong_func( $atts ){
 					// performer url
 
 					$performerurl = get_field('artists_website', $performer->ID);
-					$performerurl = (substr(strtolower($performerurl), 0, 7) == 'http://'?"":"http://").$performerurl;
+
+					if ($performerurl) {
+						$performerurl = (substr(strtolower($performerurl), 0, 7) == 'http://'?"":"http://").$performerurl;
 
 					// performer title
 
-					$output .= '<p class="festival-performer-title"><a href="' . $performerurl . '" target="_blank">' . get_the_title($performer->ID) . '</a></p>';
+						$output .= '<p class="festival-performer-title"><a href="' . $performerurl . '" target="_blank">' . get_the_title($performer->ID) . '</a></p>';
 
 					// performer bio
 
-					$output .= '<div class="festival_performer_bio" style="min-height: ' . $height . 'px">' . get_field('performer_bio', $performer->ID);
+						$output .= '<div class="festival_performer_bio" style="min-height: ' . $height . 'px">' . get_field('performer_bio', $performer->ID);
 
 					// performer url
 
-					$output .= '<a href="' . $performerurl . '" target="_blank" class="artists_site">' . $performerurl . '</a>';
+						$output .= '<a href="' . $performerurl . '" target="_blank" class="artists_site">' . $performerurl . '</a>';
 
 					// edit performer link
 
-					if (current_user_can('edit_others_posts'))
-						$output .= '<a href="' . get_edit_post_link($performer->ID) . '" class="performer_edit_link">edit performer</a>';
+						if (current_user_can('edit_others_posts'))
+							$output .= '<a href="' . get_edit_post_link($performer->ID) . '" class="performer_edit_link">edit performer</a>';
 
-					$output .= '</div><!-- /festival_performer_bio --> </div><!-- /festival_performer_container -->';
+						$output .= '</div><!-- /festival_performer_bio --> </div><!-- /festival_performer_container -->';
+					}
+					else {
+					// performer title
+
+						$output .= '<p class="festival-performer-title nolink">' . get_the_title($performer->ID) . '</p>';
+
+					// performer bio
+
+						$output .= '<div class="festival_performer_bio" style="min-height: ' . $height . 'px">' . get_field('performer_bio', $performer->ID);
+
+					// edit performer link
+
+						if (current_user_can('edit_others_posts'))
+							$output .= '<a href="' . get_edit_post_link($performer->ID) . '" class="performer_edit_link">edit performer</a>';
+
+						$output .= '</div><!-- /festival_performer_bio --> </div><!-- /festival_performer_container -->';
+					}
 				}
 			}
 
-		if (current_user_can('edit_others_posts'))
-			$output .= '<a href="' . get_edit_post_link() . '">edit festival show</a>';
+			$output .= '<a href="#top" class="festival_returntotop">Back to top^</a>';
+
+			if (current_user_can('edit_others_posts'))
+				$output .= '<a href="' . get_edit_post_link() . '">edit festival show</a>';
 
 			$output .= '</div><!-- /.festival_performance -->';
 

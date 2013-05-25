@@ -33,11 +33,17 @@ get_header(); ?>
  
 	</a> -->
 
+	<?php
+	$top = wp_get_nav_menu_items('Main Menu');
+	$firstlink = $top[0]->url;
+	?>
+
+
 	<div id="home-logo">
 
-		<a id="insideframe" href="our-shows">
+		<a id="insideframe" href="<?php echo $firstlink ?>">
 
-			<p class="read-more"></p>
+<!-- 			<p class="read-more"></p> -->
 
 			<!-- 		<img src="<?php bloginfo('url') ?>/wp-content/uploads/2013/03/logo.png" /> -->
 
@@ -64,7 +70,7 @@ get_header(); ?>
 
 		<?php
 
-			$post_id_feature = get_post(570);  /* 2644); */
+			$post_id_feature = get_post(2644);  /* local 570 */
 			$feature = $post_id_feature->post_content;
 			$feature = apply_filters('the_content', $feature);
 			$feature = str_replace(']]>', ']]>', $feature);
@@ -74,6 +80,7 @@ get_header(); ?>
 			?>
 
 		</div>
+<!-- 		<div class="flagwave"></div> -->
 	</div>
 	<div id="unicycle" class="homeperson"></div>
 	<div id="manleft" class="homeperson"></div>
@@ -83,9 +90,9 @@ get_header(); ?>
 	<div id="post_menu">
 		<div id="post"></div>
 		<?php wp_nav_menu( array('depth' => 1 ));  ?>
-		<a id="sign-ourshows" href="our-shows"></a>
+		<!-- a id="sign-ourshows" href="our-shows"></a>
 		<a id="sign-yourshows" href="your-shows"></a>
-		<a id="sign-pastshows" href="past-shows"></a>
+		<a id="sign-pastshows" href="past-shows"></a -->
 	</div>
 
 	<?php get_footer(); ?>

@@ -44,10 +44,6 @@
 
 <body <?php body_class(); ?>>
 
-<!-- 	<?php if (! is_home()) { ?>
-		<div id="background-person"></div>
-	<?php } ?> -->
-
 <div id="page" class="hfeed site">
 	<?php do_action( 'before' ); ?>
 	<?php if (! is_home()) { ?>
